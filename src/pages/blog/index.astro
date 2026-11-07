@@ -1,0 +1,43 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import Seta from '../../components/Seta.astro';
+
+const posts = (await getCollection('blog', (p) => !p.data.rascunho)).sort(
+  (a, b) => b.data.data.getTime() - a.data.data.getTime(),
+);
+const fmt = (d: Date) => d.toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric', timeZone: 'UTC' });
+---
+
+<Base
+  title="Blog | Inovee Contabilidade"
+  description="Artigos sobre contabilidade, impostos, abertura de empresas e gestão para pequenas, médias e grandes empresas."
+>
+  <PageHero
+    titulo="Contabilidade explicada de um jeito simples"
+    subtitulo="Impostos, abertura de empresas e gestão para quem empreende."
+    migalhas={[{ href: '/blog/', label: 'Blog' }]}
+  />
+  <section class="secao">
+    <div class="wrap">
+      {posts.length === 0 && <p class="muted">Ainda não há artigos publicados. Volte em breve.</p>}
+      <ul class="posts">
+        {
+          posts.map((p) => (
+            <li class="post">
+              <a href={`/blog/${p.id}/`}>
+                <span class="meta">
+                  {p.data.categoria}, {fmt(p.data.data)}
+                </span>
+                <h2>{p.data.titulo}</h2>
+                <p>{p.data.descricao}</p>
+                <span class="ir" aria-hidden="true"><Seta /></span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+</Base>

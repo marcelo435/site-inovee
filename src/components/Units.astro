@@ -1,0 +1,95 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import simbolo from '../assets/inovee-simbolo.png';
+import { empresa, linkWhatsApp } from '../data/empresa';
+
+const unidades = (await getCollection('unidades')).sort((a, b) => a.data.ordem - b.data.ordem);
+
+const telLink = (t: string) => '+55' + t.replace(/\D/g, '').replace(/^55/, '');
+// Sem link próprio do Google Maps, abre uma busca pela unidade
+const linkMapa = (u: (typeof unidades)[number]['data']) =>
+  u.mapaLink ||
+  `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+    [empresa.nome, u.endereco, u.cidade, u.uf].filter(Boolean).join(', '),
+  )}`;
+---
+
+<section id="unidades" class="secao">
+  <div class="wrap">
+    <div class="secao-topo">
+      <div>
+        <h2 class="t-xl">Onde estamos</h2>
+        <p class="lead">Atendimento presencial em quatro cidades de Pernambuco.</p>
+      </div>
+    </div>
+    <ul class="unidades">
+      {
+        unidades.map((u) => {
+          const d = u.data;
+          const telefone = d.telefone || empresa.telefone;
+          return (
+            <li class="unidade">
+              <div class="foto">
+                {d.foto ? (
+                  <Image src={d.foto} alt={`Fachada da unidade ${d.cidade}`} widths={[480, 800]} sizes="(max-width: 600px) 100vw, 40vw" />
+                ) : (
+                  <div class="foto-vazia">
+                    <Image src={simbolo} alt="" width={64} height={64} densities={[1, 2]} />
+                    <span>Foto da fachada em breve</span>
+                  </div>
+                )}
+                {d.sede && <span class="selo">Sede</span>}
+              </div>
+              <div class="info">
+                <h3>{d.cidade}</h3>
+                <p class="regiao">{d.regiao}</p>
+                <dl>
+                  <div>
+                    <dt>Localização</dt>
+                    <dd>
+                      {d.endereco ? (
+                        <>
+                          <span>
+                            {d.endereco}
+                            {d.bairro && `, ${d.bairro}`}
+                          </span>
+                          <span>
+                            {d.cidade}, {d.uf}
+                            {d.cep && `, CEP ${d.cep}`}
+                          </span>
+                        </>
+                      ) : (
+                        <>
+                          <span class="pendente">{d.cidade}, {d.uf}</span>
+                          <span class="pendente">Endereço em breve</span>
+                        </>
+                      )}
+                    </dd>
+                  </div>
+                  <div>
+                    <dt>Contato</dt>
+                    <dd>
+                      <a href={`tel:${telLink(telefone)}`}>{telefone}</a>
+                      <a href={linkWhatsApp(`Olá! Unidade ${d.cidade}.`)} target="_blank" rel="noopener">
+                        WhatsApp {empresa.whatsapp}
+                      </a>
+                    </dd>
+                  </div>
+                </dl>
+                <div class="links">
+                  <a class="btn btn-solid" href={linkMapa(d)} target="_blank" rel="noopener">Como chegar</a>
+                  <a class="btn btn-ghost" href={`/unidades/${u.id}/`}>Ver unidade</a>
+                </div>
+              </div>
+            </li>
+          );
+        })
+      }
+    </ul>
+    <div class="online">
+      <p>Está em outro estado? Atendemos 100% online, com portal, assinatura eletrônica e WhatsApp.</p>
+      <a href={linkWhatsApp()} target="_blank" rel="noopener" class="btn btn-glow">Começar atendimento online</a>
+    </div>
+  </div>
+</section>

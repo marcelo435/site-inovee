@@ -1,0 +1,52 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import simbolo from '../assets/inovee-simbolo.png';
+import { empresa, linkWhatsApp, linkInstagram } from '../data/empresa';
+
+const servicos = (await getCollection('servicos')).sort((a, b) => a.data.ordem - b.data.ordem);
+const unidades = (await getCollection('unidades')).sort((a, b) => a.data.ordem - b.data.ordem);
+const ano = new Date().getFullYear();
+const registro = [empresa.cnpj && `CNPJ ${empresa.cnpj}`, empresa.crc].filter(Boolean).join(', ');
+---
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <a href="/" class="marca" aria-label={`${empresa.nome} — início`}>
+          <Image src={simbolo} alt="" width={34} height={34} densities={[1, 2]} />
+          <span>INOVEE</span>
+        </a>
+        <p>Consultoria e contabilidade para empresas de todos os portes, presencial em Pernambuco e online em todo o Brasil.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Serviços</h4>
+        {servicos.map((s) => <a href={`/servicos/${s.id}/`}>{s.data.titulo}</a>)}
+      </div>
+      <div class="footer-col">
+        <h4>Empresa</h4>
+        <a href="/#sobre">Sobre nós</a>
+        <a href="/blog/">Blog</a>
+        <a href="/#faq">Dúvidas</a>
+        <a href="/#contato">Contato</a>
+        <a href={empresa.portalCliente} target="_blank" rel="noopener">Área do Cliente</a>
+      </div>
+      <div class="footer-col">
+        <h4>Unidades</h4>
+        {unidades.map((u) => <a href={`/unidades/${u.id}/`}>{u.data.cidade}{u.data.sede ? ' (sede)' : ''}</a>)}
+      </div>
+      <div class="footer-col">
+        <h4>Contato</h4>
+        <a href={linkWhatsApp()} target="_blank" rel="noopener">{empresa.whatsapp}</a>
+        <a href={`tel:${empresa.telefoneLink}`}>{empresa.telefone}</a>
+        <a href={`mailto:${empresa.email}`}>{empresa.email}</a>
+        <a href={linkInstagram} target="_blank" rel="noopener">@{empresa.instagram}</a>
+      </div>
+    </div>
+    <div class="footer-base">
+      <span>© {ano} {empresa.razaoSocial}{registro && `. ${registro}`}</span>
+      <a href="/politica-de-privacidade/">Política de Privacidade</a>
+    </div>
+  </div>
+</footer>

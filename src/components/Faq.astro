@@ -1,0 +1,44 @@
+---
+import { perguntas } from '../data/faq';
+---
+
+<section id="faq" class="secao">
+  <div class="wrap faq">
+    <div>
+      <h2 class="t-xl">Dúvidas frequentes</h2>
+      <p class="lead" style="margin-top:18px">Não achou sua pergunta? <a class="link" href="#contato">Fale com a gente</a>.</p>
+    </div>
+    <div class="faq-lista">
+      {
+        perguntas.map((q, i) => (
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false" aria-controls={`faq-a-${i}`} id={`faq-q-${i}`}>
+              {q.p}
+              <span class="mais" aria-hidden="true" />
+            </button>
+            <div class="faq-a" id={`faq-a-${i}`} role="region" aria-labelledby={`faq-q-${i}`}>
+              <div>{q.r}</div>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<script>
+  const botoes = document.querySelectorAll<HTMLButtonElement>('.faq-q');
+  botoes.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const abrir = btn.getAttribute('aria-expanded') !== 'true';
+      botoes.forEach((b) => {
+        b.setAttribute('aria-expanded', 'false');
+        b.nextElementSibling!.classList.remove('open');
+      });
+      if (abrir) {
+        btn.setAttribute('aria-expanded', 'true');
+        btn.nextElementSibling!.classList.add('open');
+      }
+    });
+  });
+</script>

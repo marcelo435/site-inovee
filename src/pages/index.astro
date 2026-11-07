@@ -1,0 +1,39 @@
+---
+import Base from '../layouts/Base.astro';
+import Hero from '../components/Hero.astro';
+import Destaques from '../components/Destaques.astro';
+import Services from '../components/Services.astro';
+import About from '../components/About.astro';
+import Steps from '../components/Steps.astro';
+import Units from '../components/Units.astro';
+import News from '../components/News.astro';
+import Faq from '../components/Faq.astro';
+import Contact from '../components/Contact.astro';
+import { perguntas } from '../data/faq';
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: perguntas.map((q) => ({
+    '@type': 'Question',
+    name: q.p,
+    acceptedAnswer: { '@type': 'Answer', text: q.r },
+  })),
+};
+---
+
+<Base
+  title="Inovee Contabilidade | Contabilidade para Todos os Portes"
+  description="Contabilidade tecnológica para pequenas, médias e grandes empresas. Simples Nacional, Lucro Presumido e Lucro Real. 4 unidades em PE. Todo o Brasil."
+  schema={faqSchema}
+>
+  <Hero />
+  <Destaques />
+  <Services />
+  <About />
+  <Steps />
+  <Units />
+  <News />
+  <Faq />
+  <Contact />
+</Base>

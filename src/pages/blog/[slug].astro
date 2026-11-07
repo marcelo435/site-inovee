@@ -1,0 +1,42 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import CtaFinal from '../../components/CtaFinal.astro';
+import { empresa } from '../../data/empresa';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', (p) => !p.data.rascunho);
+  return posts.map((p) => ({ params: { slug: p.id }, props: { post: p } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const dataFmt = post.data.data.toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric', timeZone: 'UTC' });
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: post.data.titulo,
+  description: post.data.descricao,
+  datePublished: post.data.data.toISOString(),
+  author: { '@type': 'Organization', name: post.data.autor },
+  publisher: { '@id': `${empresa.site}/#empresa` },
+  mainEntityOfPage: `${empresa.site}/blog/${post.id}/`,
+};
+---
+
+<Base title={`${post.data.titulo} | Blog Inovee`} description={post.data.descricao} schema={schema} type="article">
+  <PageHero kicker={post.data.categoria} titulo={post.data.titulo} migalhas={[{ href: '/blog/', label: 'Blog' }]}>
+    <p class="post-meta">{dataFmt}, por {post.data.autor}</p>
+  </PageHero>
+  <section class="secao">
+    <div class="wrap">
+      <article class="prose prose-centro">
+        <Content />
+        <CtaFinal />
+        <p><a href="/blog/">Voltar para o blog</a></p>
+      </article>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,60 @@
+---
+// Notícias carregadas no navegador a partir do feed RSS da Fenacon.
+---
+
+<section id="noticias" class="secao">
+  <div class="wrap">
+    <div class="secao-topo">
+      <div>
+        <h2 class="t-xl">Notícias do setor</h2>
+        <p class="lead">As novidades contábeis e tributárias mais recentes, publicadas pela Fenacon.</p>
+      </div>
+      <a class="link" href="https://fenacon.org.br/noticias/" target="_blank" rel="noopener">Todas as notícias na Fenacon</a>
+    </div>
+    <ul class="noticias" id="newsGrid" aria-live="polite">
+      <li class="noticia esqueleto"><div></div></li>
+      <li class="noticia esqueleto"><div></div></li>
+      <li class="noticia esqueleto"><div></div></li>
+      <li class="noticia esqueleto"><div></div></li>
+    </ul>
+  </div>
+</section>
+
+<script>
+  type Item = { title: string; link: string; pubDate: string; categories?: string[] };
+
+  const lista = document.getElementById('newsGrid')!;
+
+  const esc = (s: unknown) =>
+    String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!);
+
+  const data = (str: string) => {
+    const d = new Date(str.replace(' ', 'T'));
+    return isNaN(d.getTime())
+      ? { iso: '', txt: str }
+      : { iso: d.toISOString(), txt: d.toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' }) };
+  };
+
+  const linha = (item: Item) => {
+    const d = data(item.pubDate);
+    const link = /^https?:\/\//.test(item.link || '') ? item.link : 'https://fenacon.org.br/noticias/';
+    return `<li class="noticia"><a href="${esc(link)}" target="_blank" rel="noopener">
+      <time datetime="${esc(d.iso)}">${esc(d.txt)}</time>
+      <h3>${esc(item.title)}</h3>
+      <span class="cat">${esc(item.categories?.[0] || 'Contabilidade')}</span>
+    </a></li>`;
+  };
+
+  const api = 'https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent('https://fenacon.org.br/feed/');
+
+  fetch(api)
+    .then((r) => r.json())
+    .then((res) => {
+      if (res.status !== 'ok' || !res.items?.length) throw new Error('sem notícias');
+      lista.innerHTML = (res.items as Item[]).slice(0, 6).map(linha).join('');
+    })
+    .catch(() => {
+      lista.innerHTML =
+        '<li class="noticias-erro">As notícias não carregaram agora. Veja direto no <a href="https://fenacon.org.br/noticias/" target="_blank" rel="noopener">site da Fenacon</a>.</li>';
+    });
+</script>

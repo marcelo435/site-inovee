@@ -1,0 +1,57 @@
+---
+import { getCollection } from 'astro:content';
+import { portes } from '../data/empresa';
+import Seta from './Seta.astro';
+
+const servicos = (await getCollection('servicos')).sort((a, b) => a.data.ordem - b.data.ordem);
+const nomePorte = Object.fromEntries(portes.map((p) => [p.id, p.nome]));
+---
+
+<section id="servicos" class="secao">
+  <div class="wrap">
+    <div class="secao-topo">
+      <div>
+        <h2 class="t-xl">O que fazemos</h2>
+        <p class="lead">Tudo o que a sua empresa precisa em um só lugar. Filtre pelo porte do seu negócio.</p>
+      </div>
+      <div class="filtro" role="group" aria-label="Filtrar serviços por porte">
+        <button data-porte="todos" aria-pressed="true">Todos</button>
+        {portes.map((p) => <button data-porte={p.id} aria-pressed="false">{p.nome}</button>)}
+      </div>
+    </div>
+
+    <ul class="servicos">
+      {
+        servicos.map((s) => (
+          <li class="servico" data-portes={s.data.portes.join(' ')}>
+            <a href={`/servicos/${s.id}/`}>
+              <h3>{s.data.titulo}</h3>
+              <div>
+                <p>{s.data.resumo}</p>
+                <p class="itens">{s.data.itens.join(', ')}.</p>
+                <div class="portes">
+                  {s.data.portes.map((p) => <span class="tag">{nomePorte[p]}</span>)}
+                </div>
+              </div>
+              <span class="ir" aria-hidden="true"><Seta /></span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<script>
+  const botoes = document.querySelectorAll<HTMLButtonElement>('.filtro button');
+  const itens = document.querySelectorAll<HTMLElement>('.servico');
+  botoes.forEach((b) =>
+    b.addEventListener('click', () => {
+      botoes.forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+      const porte = b.dataset.porte!;
+      itens.forEach((li) => {
+        li.hidden = porte !== 'todos' && !(li.dataset.portes || '').split(' ').includes(porte);
+      });
+    }),
+  );
+</script>

@@ -1,0 +1,80 @@
+---
+import { Image } from 'astro:assets';
+import simbolo from '../assets/inovee-simbolo.png';
+import { empresa } from '../data/empresa';
+
+const links = [
+  { href: '/#servicos', label: 'Serviços' },
+  { href: '/#sobre', label: 'Sobre' },
+  { href: '/#unidades', label: 'Unidades' },
+  { href: '/blog/', label: 'Blog' },
+  { href: '/#faq', label: 'Dúvidas' },
+];
+---
+
+<header class="site-header" id="siteHeader">
+  <div class="bar">
+    <a href="/" class="marca" aria-label={`${empresa.nome} — início`}>
+      <Image src={simbolo} alt="" width={34} height={34} densities={[1, 2]} loading="eager" />
+      <span>INOVEE</span>
+    </a>
+    <nav aria-label="Menu principal" style="display:contents">
+      <ul class="nav-links" id="navLinks">
+        {links.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+        <li><a href={empresa.portalCliente} target="_blank" rel="noopener">Área do Cliente</a></li>
+        <li class="nav-cta"><a href="/#contato" class="btn btn-glow">Fale conosco <span class="seta">→</span></a></li>
+      </ul>
+    </nav>
+    <button class="tema" id="temaToggle" type="button" aria-label="Ativar modo escuro">
+      <svg class="sol" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="4.2" />
+        <path d="M12 2.5v2.2M12 19.3v2.2M4.6 4.6l1.6 1.6M17.8 17.8l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.6 19.4l1.6-1.6M17.8 6.2l1.6-1.6" />
+      </svg>
+      <svg class="lua" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.8 6.8 0 0 0 10.7 10.7Z" />
+      </svg>
+    </button>
+    <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="navLinks">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<script>
+  const header = document.getElementById('siteHeader')!;
+  const toggle = document.getElementById('menuToggle')!;
+  const links = document.getElementById('navLinks')!;
+
+  const setOpen = (open: boolean) => {
+    links.classList.toggle('open', open);
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? 'Fechar menu' : 'Abrir menu');
+  };
+  toggle.addEventListener('click', () => setOpen(!links.classList.contains('open')));
+  links.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
+
+  // Tema claro (padrão) / escuro, salvo no navegador do visitante
+  const botaoTema = document.getElementById('temaToggle')!;
+  const raiz = document.documentElement;
+  const rotularTema = () => {
+    const escuro = raiz.dataset.theme === 'dark';
+    botaoTema.setAttribute('aria-label', escuro ? 'Ativar modo claro' : 'Ativar modo escuro');
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', escuro ? '#04060c' : '#f5f7fc');
+  };
+  rotularTema();
+  botaoTema.addEventListener('click', () => {
+    const escuro = raiz.dataset.theme !== 'dark';
+    if (escuro) raiz.dataset.theme = 'dark';
+    else delete raiz.dataset.theme;
+    try {
+      localStorage.setItem('inovee-tema', escuro ? 'dark' : 'light');
+    } catch {}
+    rotularTema();
+    window.dispatchEvent(new Event('inovee:tema'));
+  });
+
+  // Fundo sólido no cabeçalho depois de rolar a página
+  const atualizar = () => header.classList.toggle('solid', window.scrollY > 24);
+  atualizar();
+  window.addEventListener('scroll', atualizar, { passive: true });
+</script>

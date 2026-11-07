@@ -1,0 +1,38 @@
+---
+import { Image } from 'astro:assets';
+import simbolo from '../assets/inovee-simbolo.png';
+
+---
+
+<section class="hero" id="home">
+  <div class="hero-3d" id="simbolo3d" aria-hidden="true">
+    <Image class="poster" src={simbolo} alt="" width={400} height={400} loading="lazy" />
+  </div>
+
+  <div class="hero-inner">
+    <div>
+      <h1 class="t-hero">Sua contabilidade inteligente, presencial e digital, sempre perto de você.</h1>
+      <p class="lead">
+        Há mais de 10 anos cuidamos de empresas de todos os portes, do MEI à grande empresa, no Simples Nacional, no
+        Lucro Presumido e no Lucro Real. Quatro unidades em Pernambuco e atendimento online em todo o Brasil.
+      </p>
+      <div class="hero-acoes">
+        <a href="#contato" class="btn btn-solid">Agendar consulta gratuita <span class="seta">→</span></a>
+        <a href="#servicos" class="btn btn-ghost">Ver serviços</a>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<script>
+  // Carrega o 3D só depois que a página abriu (não atrasa o carregamento)
+  const alvo = document.getElementById('simbolo3d');
+  if (alvo) {
+    const carregar = () => import('../scripts/simbolo3d')
+        .then((m) => m.iniciarSimbolo(alvo))
+        .catch(() => alvo.classList.add('sem-3d'));
+    if ('requestIdleCallback' in window) requestIdleCallback(carregar, { timeout: 1200 });
+    else setTimeout(carregar, 300);
+  }
+</script>

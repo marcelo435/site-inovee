@@ -1,0 +1,49 @@
+// ─────────────────────────────────────────────────────────────
+// DADOS CENTRAIS DA EMPRESA
+// Altere aqui e o site inteiro é atualizado (cabeçalho, rodapé,
+// botões de WhatsApp, formulário, SEO).
+// ─────────────────────────────────────────────────────────────
+
+export const empresa = {
+  nome: 'Inovee Contabilidade',
+  razaoSocial: 'Inovee Consultoria e Contabilidade',
+
+  // TODO: preencher antes de publicar
+  cnpj: '', // ex.: '00.000.000/0001-00'
+  crc: '', // ex.: 'CRC-PE 000000/O-0'
+
+  site: 'https://www.inoveecontabilidade.com',
+  email: 'atendimento@inoveecontabilidade.com',
+
+  telefone: '(81) 3197-2688',
+  telefoneLink: '+558131972688',
+
+  whatsapp: '(81) 99628-3491',
+  whatsappNumero: '5581996283491', // só números, com 55 + DDD
+
+  instagram: 'inoveeoficial',
+  portalCliente: 'https://inoveeicontabilidadedigital.osayk.com.br/#/login',
+
+  horario: 'Seg–Sex: 08h–18h | Sáb: 08h–12h',
+  anosDeMercado: '10+',
+
+  // Opcional: chave gratuita do https://web3forms.com para o formulário
+  // também enviar uma cópia por e-mail. Vazio = só abre o WhatsApp.
+  web3formsKey: '',
+};
+
+export const MENSAGEM_PADRAO = 'Olá! Gostaria de saber mais sobre os serviços da Inovee.';
+
+/** Gera o link do WhatsApp com uma mensagem pronta. */
+export function linkWhatsApp(mensagem: string = MENSAGEM_PADRAO): string {
+  return `https://wa.me/${empresa.whatsappNumero}?text=${encodeURIComponent(mensagem)}`;
+}
+
+export const linkInstagram = `https://instagram.com/${empresa.instagram}`;
+
+export const portes = [
+  { id: 'mei', nome: 'MEI' },
+  { id: 'pequena', nome: 'Pequena' },
+  { id: 'media', nome: 'Média' },
+  { id: 'grande', nome: 'Grande' },
+] as const;

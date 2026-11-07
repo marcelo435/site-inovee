@@ -1,0 +1,31 @@
+---
+interface Props {
+  kicker?: string;
+  titulo: string;
+  subtitulo?: string;
+  migalhas?: { href: string; label: string }[];
+}
+const { kicker, titulo, subtitulo, migalhas = [] } = Astro.props;
+---
+
+<section class="page-hero">
+  <div class="wrap">
+    {
+      migalhas.length > 0 && (
+        <nav class="migalhas" aria-label="Você está em">
+          <a href="/">Início</a>
+          {migalhas.map((m) => (
+            <>
+              <span aria-hidden="true">/</span>
+              <a href={m.href}>{m.label}</a>
+            </>
+          ))}
+        </nav>
+      )
+    }
+    {kicker && <span class="kicker">{kicker}</span>}
+    <h1 class="t-xl">{titulo}</h1>
+    {subtitulo && <p class="lead">{subtitulo}</p>}
+    <slot />
+  </div>
+</section>

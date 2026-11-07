@@ -1,0 +1,55 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import CtaFinal from '../../components/CtaFinal.astro';
+import { empresa, portes } from '../../data/empresa';
+
+export async function getStaticPaths() {
+  const servicos = await getCollection('servicos');
+  return servicos.map((s) => ({ params: { slug: s.id }, props: { servico: s } }));
+}
+
+const { servico } = Astro.props;
+const { Content } = await render(servico);
+const outros = (await getCollection('servicos'))
+  .filter((s) => s.id !== servico.id)
+  .sort((a, b) => a.data.ordem - b.data.ordem);
+const nomePorte = Object.fromEntries(portes.map((p) => [p.id, p.nome]));
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: servico.data.titulo,
+  description: servico.data.descricaoSeo,
+  provider: { '@id': `${empresa.site}/#empresa` },
+  areaServed: { '@type': 'Country', name: 'Brasil' },
+};
+---
+
+<Base title={`${servico.data.titulo} | Inovee Contabilidade`} description={servico.data.descricaoSeo} schema={schema}>
+  <PageHero titulo={servico.data.titulo} subtitulo={servico.data.resumo} migalhas={[{ href: '/#servicos', label: 'Serviços' }]} />
+
+  <section class="secao">
+    <div class="wrap pagina">
+      <article class="prose">
+        <Content />
+        <CtaFinal mensagem={`Olá! Tenho interesse no serviço de ${servico.data.titulo}.`} />
+      </article>
+      <aside class="lateral">
+        <h3>Para quais empresas</h3>
+        <div class="tags">
+          {servico.data.portes.map((p) => <span class="tag">{nomePorte[p]}</span>)}
+        </div>
+        <h3>Principais entregas</h3>
+        <ul>
+          {servico.data.itens.map((i) => <li>{i}</li>)}
+        </ul>
+        <h3>Outros serviços</h3>
+        <ul>
+          {outros.map((o) => <li><a href={`/servicos/${o.id}/`}>{o.data.titulo}</a></li>)}
+        </ul>
+      </aside>
+    </div>
+  </section>
+</Base>

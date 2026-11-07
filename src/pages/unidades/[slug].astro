@@ -1,0 +1,82 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import CtaFinal from '../../components/CtaFinal.astro';
+import { empresa, linkWhatsApp } from '../../data/empresa';
+
+export async function getStaticPaths() {
+  const unidades = await getCollection('unidades');
+  return unidades.map((u) => ({ params: { slug: u.id }, props: { unidade: u } }));
+}
+
+const { unidade } = Astro.props;
+const u = unidade.data;
+const { Content } = await render(unidade);
+const servicos = (await getCollection('servicos')).sort((a, b) => a.data.ordem - b.data.ordem);
+const telefone = u.telefone || empresa.telefone;
+const telefoneLink = '+55' + telefone.replace(/\D/g, '').replace(/^55/, '');
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'AccountingService',
+  name: `${empresa.nome} — ${u.cidade}`,
+  parentOrganization: { '@id': `${empresa.site}/#empresa` },
+  url: `${empresa.site}/unidades/${unidade.id}/`,
+  telephone: telefoneLink,
+  email: empresa.email,
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: u.cidade,
+    addressRegion: u.uf,
+    addressCountry: 'BR',
+    ...(u.endereco ? { streetAddress: u.endereco } : {}),
+    ...(u.cep ? { postalCode: u.cep } : {}),
+  },
+  ...(u.mapaLink ? { hasMap: u.mapaLink } : {}),
+};
+---
+
+<Base
+  title={`Contabilidade em ${u.cidade} - ${u.uf} | Inovee Contabilidade`}
+  description={`Escritório de contabilidade em ${u.cidade} - ${u.uf}. ${u.descricao} Simples Nacional, Lucro Presumido e Lucro Real.`}
+  schema={schema}
+>
+  <PageHero
+    kicker={u.sede ? 'Sede' : u.regiao}
+    titulo={`Contabilidade em ${u.cidade}`}
+    subtitulo={u.descricao}
+    migalhas={[{ href: '/#unidades', label: 'Unidades' }]}
+  />
+
+  <section class="secao">
+    <div class="wrap pagina">
+      <article class="prose">
+        <Content />
+        <h2>Serviços disponíveis em {u.cidade}</h2>
+        <ul>
+          {servicos.map((s) => <li><a href={`/servicos/${s.id}/`}>{s.data.titulo}</a>: {s.data.resumo}</li>)}
+        </ul>
+        {
+          u.mapaEmbed && (
+            <div class="mapa">
+              <iframe src={u.mapaEmbed} title={`Mapa da unidade ${u.cidade}`} loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen />
+            </div>
+          )
+        }
+        <CtaFinal mensagem={`Olá! Unidade ${u.cidade}.`} />
+      </article>
+      <aside class="lateral">
+        <h3>Contato da unidade</h3>
+        <ul>
+          {u.endereco && <li>{u.endereco}{u.bairro && `, ${u.bairro}`}<br />{u.cidade}, {u.uf}{u.cep && `. CEP ${u.cep}`}</li>}
+          <li><a href={`tel:${telefoneLink}`}>{telefone}</a></li>
+          <li><a href={linkWhatsApp(`Olá! Unidade ${u.cidade}.`)} target="_blank" rel="noopener">WhatsApp {empresa.whatsapp}</a></li>
+          <li><a href={`mailto:${empresa.email}`}>{empresa.email}</a></li>
+          <li>{empresa.horario}</li>
+        </ul>
+        {u.mapaLink && <a class="btn btn-glow" href={u.mapaLink} target="_blank" rel="noopener">Como chegar</a>}
+      </aside>
+    </div>
+  </section>
+</Base>

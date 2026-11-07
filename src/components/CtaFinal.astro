@@ -1,0 +1,15 @@
+---
+import { linkWhatsApp } from '../data/empresa';
+interface Props {
+  mensagem?: string;
+}
+const { mensagem } = Astro.props;
+---
+
+<div class="cta-final">
+  <div>
+    <h2>A primeira consulta é gratuita</h2>
+    <p>Fale com um especialista da Inovee e receba uma proposta para a sua empresa.</p>
+  </div>
+  <a href={linkWhatsApp(mensagem)} target="_blank" rel="noopener" class="btn btn-solid">Falar no WhatsApp</a>
+</div>

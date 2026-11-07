@@ -1,0 +1,29 @@
+---
+const principios = [
+  { t: 'Preço claro desde o início', d: 'Você sabe exatamente o que paga desde o primeiro dia. Sem cobranças surpresa.' },
+  { t: 'Tudo pelo celular', d: 'Assine documentos, envie arquivos e acompanhe sua empresa pelo portal, a qualquer hora.' },
+  { t: 'Gente que responde', d: 'Atendimento rápido e humano, com linguagem simples, sem termos complicados.' },
+  { t: 'Sigilo total', d: 'Seus dados financeiros são tratados com absoluto sigilo e segurança.' },
+];
+---
+
+<section id="sobre" class="secao">
+  <div class="wrap sobre">
+    <div>
+      <h2>
+        <strong>Mais de 10 anos</strong> cuidando da contabilidade de empresas, com <strong>quatro unidades</strong> em
+        Pernambuco e atendimento online para <strong>todo o Brasil</strong>.
+      </h2>
+    </div>
+    <div class="principios">
+      {
+        principios.map((p) => (
+          <div>
+            <h3>{p.t}</h3>
+            <p>{p.d}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

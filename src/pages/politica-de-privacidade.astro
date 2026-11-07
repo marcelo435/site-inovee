@@ -1,0 +1,74 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import { empresa } from '../data/empresa';
+
+// MODELO — revisar com o jurídico antes de publicar.
+const atualizado = '7 de novembro de 2026';
+---
+
+<Base
+  title="Política de Privacidade | Inovee Contabilidade"
+  description="Saiba como a Inovee Contabilidade trata os seus dados pessoais, conforme a Lei Geral de Proteção de Dados (LGPD)."
+>
+  <PageHero titulo="Política de Privacidade" subtitulo={`Última atualização: ${atualizado}`} />
+  <section class="secao">
+    <div class="wrap">
+      <article class="prose prose-centro">
+        <p>
+          Esta política explica como a <strong>{empresa.razaoSocial}</strong>{empresa.cnpj && `, inscrita no CNPJ ${empresa.cnpj}`}
+          ("Inovee"), trata os dados pessoais coletados por meio deste site, em conformidade com a Lei nº 13.709/2018
+          (Lei Geral de Proteção de Dados — LGPD).
+        </p>
+
+        <h2>1. Quais dados coletamos</h2>
+        <p>Coletamos apenas os dados que você nos informa voluntariamente no formulário de contato:</p>
+        <ul>
+          <li>Nome, número de WhatsApp e e-mail;</li>
+          <li>Porte da empresa e regime tributário (opcionais);</li>
+          <li>O conteúdo da mensagem enviada.</li>
+        </ul>
+        <p>
+          O site não utiliza cookies de rastreamento ou de publicidade. Guardamos no seu navegador apenas a informação de
+          que você já viu o aviso de privacidade.
+        </p>
+
+        <h2>2. Para que usamos os dados</h2>
+        <ul>
+          <li>Responder ao seu contato e agendar a consulta solicitada;</li>
+          <li>Elaborar e enviar proposta de prestação de serviços contábeis.</li>
+        </ul>
+        <p>
+          A base legal é o seu consentimento e a execução de procedimentos preliminares relacionados a contrato (art. 7º,
+          incisos I e V, da LGPD).
+        </p>
+
+        <h2>3. Compartilhamento</h2>
+        <p>Não vendemos nem cedemos seus dados. Eles podem passar pelos seguintes serviços, necessários ao funcionamento do site:</p>
+        <ul>
+          <li><strong>WhatsApp (Meta)</strong> — o formulário abre uma conversa no WhatsApp com a mensagem que você preencheu;</li>
+          <li><strong>Provedor de hospedagem</strong> — registros técnicos de acesso (como endereço IP), para segurança;</li>
+          <li><strong>rss2json.com</strong> — usado para exibir as notícias da Fenacon na página inicial.</li>
+        </ul>
+
+        <h2>4. Por quanto tempo guardamos</h2>
+        <p>
+          Os dados de contato são mantidos pelo tempo necessário para atender à sua solicitação. Se você se tornar cliente,
+          os dados passam a ser tratados conforme o contrato de prestação de serviços e as obrigações legais aplicáveis.
+        </p>
+
+        <h2>5. Seus direitos</h2>
+        <p>
+          Você pode, a qualquer momento, solicitar a confirmação do tratamento, o acesso, a correção, a anonimização, a
+          portabilidade ou a eliminação dos seus dados, e também revogar o consentimento (art. 18 da LGPD).
+        </p>
+
+        <h2>6. Contato</h2>
+        <p>
+          Para exercer seus direitos ou tirar dúvidas sobre esta política, escreva para
+          <a href={`mailto:${empresa.email}`}>{empresa.email}</a>.
+        </p>
+      </article>
+    </div>
+  </section>
+</Base>

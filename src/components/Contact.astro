@@ -1,0 +1,122 @@
+---
+import { empresa, linkWhatsApp, linkInstagram } from '../data/empresa';
+---
+
+<section id="contato" class="secao">
+  <div class="wrap contato">
+    <div>
+      <h2 class="t-xl">Vamos conversar?</h2>
+      <p class="lead" style="margin-top:18px">A primeira consulta é gratuita. Conte sobre a sua empresa e montamos uma proposta.</p>
+      <ul class="canais">
+        <li><span>WhatsApp</span><a href={linkWhatsApp()} target="_blank" rel="noopener">{empresa.whatsapp}</a></li>
+        <li><span>Telefone</span><a href={`tel:${empresa.telefoneLink}`}>{empresa.telefone}</a></li>
+        <li><span>E-mail</span><a href={`mailto:${empresa.email}`}>{empresa.email}</a></li>
+        <li><span>Horário</span>{empresa.horario}</li>
+        <li><span>Instagram</span><a href={linkInstagram} target="_blank" rel="noopener">@{empresa.instagram}</a></li>
+      </ul>
+      <a class="btn btn-ghost portal" href={empresa.portalCliente} target="_blank" rel="noopener">
+        Já é cliente? Acesse a Área do Cliente <span class="seta">→</span>
+      </a>
+    </div>
+
+    <form class="form" id="contatoForm" data-whatsapp={empresa.whatsappNumero} data-web3forms={empresa.web3formsKey}>
+      <h3>Solicite uma consulta gratuita</h3>
+      <div class="form-row">
+        <div class="campo">
+          <label for="f-nome">Nome *</label>
+          <input id="f-nome" type="text" name="nome" placeholder="Seu nome" autocomplete="name" required />
+        </div>
+        <div class="campo">
+          <label for="f-whats">WhatsApp *</label>
+          <input id="f-whats" type="tel" name="whatsapp" placeholder="(00) 00000-0000" autocomplete="tel" required />
+        </div>
+      </div>
+      <div class="campo">
+        <label for="f-email">E-mail *</label>
+        <input id="f-email" type="email" name="email" placeholder="seu@email.com" autocomplete="email" required />
+      </div>
+      <div class="form-row">
+        <div class="campo">
+          <label for="f-porte">Porte da empresa</label>
+          <select id="f-porte" name="porte">
+            <option value="">Selecione</option>
+            <option>MEI</option>
+            <option>Pequena empresa</option>
+            <option>Média empresa</option>
+            <option>Grande empresa</option>
+            <option>Ainda não tenho empresa</option>
+          </select>
+        </div>
+        <div class="campo">
+          <label for="f-regime">Regime tributário</label>
+          <select id="f-regime" name="regime">
+            <option value="">Selecione</option>
+            <option>Simples Nacional</option>
+            <option>Lucro Presumido</option>
+            <option>Lucro Real</option>
+            <option>Não sei / quero indicação</option>
+          </select>
+        </div>
+      </div>
+      <div class="campo">
+        <label for="f-msg">Mensagem</label>
+        <textarea id="f-msg" name="mensagem" placeholder="Como podemos ajudar?"></textarea>
+      </div>
+      <label class="consentimento">
+        <input type="checkbox" name="consentimento" required />
+        <span>
+          Concordo com o uso dos meus dados para retorno do contato, conforme a{' '}
+          <a href="/politica-de-privacidade/" target="_blank">Política de Privacidade</a>. *
+        </span>
+      </label>
+      <button type="submit" class="btn btn-solid">Enviar pelo WhatsApp</button>
+      <p class="form-status" id="formStatus" role="status"></p>
+    </form>
+  </div>
+</section>
+
+<script>
+  const form = document.getElementById('contatoForm') as HTMLFormElement;
+  const status = document.getElementById('formStatus')!;
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const dados = new FormData(form);
+    const v = (k: string) => String(dados.get(k) || '').trim();
+
+    const linhas = [
+      'Olá! Gostaria de solicitar uma consulta gratuita.',
+      '',
+      `*Nome:* ${v('nome')}`,
+      `*WhatsApp:* ${v('whatsapp')}`,
+      `*E-mail:* ${v('email')}`,
+    ];
+    if (v('porte')) linhas.push(`*Porte da empresa:* ${v('porte')}`);
+    if (v('regime')) linhas.push(`*Regime tributário:* ${v('regime')}`);
+    if (v('mensagem')) linhas.push('', `*Mensagem:* ${v('mensagem')}`);
+
+    // Cópia opcional por e-mail (ativada quando há chave do Web3Forms em src/data/empresa.ts)
+    const chave = form.dataset.web3forms;
+    if (chave) {
+      fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          access_key: chave,
+          subject: `Novo contato pelo site — ${v('nome')}`,
+          from_name: 'Site Inovee',
+          nome: v('nome'),
+          whatsapp: v('whatsapp'),
+          email: v('email'),
+          porte: v('porte'),
+          regime: v('regime'),
+          mensagem: v('mensagem'),
+        }),
+      }).catch(() => {});
+    }
+
+    window.open(`https://wa.me/${form.dataset.whatsapp}?text=${encodeURIComponent(linhas.join('\n'))}`, '_blank', 'noopener');
+    status.textContent = 'Abrimos o WhatsApp com a sua mensagem. Toque em enviar para concluir.';
+    form.reset();
+  });
+</script>

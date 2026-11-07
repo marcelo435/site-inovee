@@ -1,0 +1,29 @@
+---
+const passos = [
+  { t: 'Agende uma conversa', d: 'Pelo WhatsApp, pelo formulário ou por telefone. A primeira consulta é gratuita.' },
+  { t: 'Receba um diagnóstico', d: 'Analisamos sua empresa e apresentamos a proposta mais adequada.' },
+  { t: 'Contrate online', d: 'Assinatura digital, sem papelada desnecessária.' },
+  { t: 'Deixe com a gente', d: 'Sua contabilidade em dia, e você focado no seu negócio.' },
+];
+---
+
+<section class="secao">
+  <div class="wrap">
+    <div class="secao-topo">
+      <div>
+        <h2 class="t-xl">Como começar</h2>
+        <p class="lead">Quatro passos, do primeiro contato à contabilidade em dia.</p>
+      </div>
+    </div>
+    <ol class="passos">
+      {
+        passos.map((p) => (
+          <li>
+            <h3>{p.t}</h3>
+            <p>{p.d}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>

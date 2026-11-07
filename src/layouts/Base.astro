@@ -1,0 +1,86 @@
+---
+import '@fontsource-variable/urbanist';
+import '@fontsource-variable/instrument-sans';
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import WhatsAppFloat from '../components/WhatsAppFloat.astro';
+import CookieBanner from '../components/CookieBanner.astro';
+import { empresa, linkInstagram } from '../data/empresa';
+
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  /** Dados estruturados extras (JSON-LD) específicos da página */
+  schema?: Record<string, unknown> | Record<string, unknown>[];
+  type?: 'website' | 'article';
+}
+
+const { title, description, image = '/og-image.jpg', schema, type = 'website' } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImage = new URL(image, Astro.site);
+
+const orgSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'AccountingService',
+  '@id': `${empresa.site}/#empresa`,
+  name: empresa.nome,
+  legalName: empresa.razaoSocial,
+  url: empresa.site,
+  logo: new URL('/favicon.png', Astro.site).href,
+  image: ogImage.href,
+  email: empresa.email,
+  telephone: empresa.telefoneLink,
+  areaServed: { '@type': 'Country', name: 'Brasil' },
+  sameAs: [linkInstagram],
+  ...(empresa.cnpj ? { taxID: empresa.cnpj } : {}),
+};
+const schemas = [orgSchema, ...(schema ? (Array.isArray(schema) ? schema : [schema]) : [])];
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta name="theme-color" content="#f5f7fc" />
+    <meta name="color-scheme" content="light dark" />
+    <!-- Aplica o tema salvo antes de desenhar a página (o padrão é o claro) -->
+    <script is:inline>
+      try {
+        if (localStorage.getItem('inovee-tema') === 'dark') {
+          document.documentElement.dataset.theme = 'dark';
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#04060c');
+        }
+      } catch (e) {}
+    </script>
+
+    <meta property="og:type" content={type} />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:site_name" content={empresa.nome} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    {schemas.map((s) => <script type="application/ld+json" set:html={JSON.stringify(s)} />)}
+  </head>
+  <body>
+    <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+    <Header />
+    <main id="conteudo">
+      <slot />
+    </main>
+    <Footer />
+    <WhatsAppFloat />
+    <CookieBanner />
+  </body>
+</html>

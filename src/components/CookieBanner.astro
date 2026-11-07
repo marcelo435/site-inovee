@@ -1,0 +1,30 @@
+---
+// Aviso de privacidade (LGPD). Hoje o site não usa cookies de rastreamento.
+// Se no futuro adicionar Google Analytics / Meta Pixel, carregue-os apenas
+// depois que o visitante clicar em "Aceitar" (evento 'inovee:consentimento').
+---
+
+<div class="cookie-banner" id="cookieBanner" role="dialog" aria-label="Aviso de privacidade" hidden>
+  <p>
+    Usamos apenas os recursos necessários para o funcionamento do site e respeitamos a sua privacidade, conforme a LGPD.
+    Saiba mais na nossa <a href="/politica-de-privacidade/">Política de Privacidade</a>.
+  </p>
+  <button class="btn btn-solid" id="cookieAccept">Entendi</button>
+</div>
+
+<script>
+  const KEY = 'inovee-consentimento';
+  const banner = document.getElementById('cookieBanner')!;
+  let aceito = false;
+  try {
+    aceito = localStorage.getItem(KEY) === 'sim';
+  } catch {}
+  if (!aceito) banner.hidden = false;
+  document.getElementById('cookieAccept')!.addEventListener('click', () => {
+    try {
+      localStorage.setItem(KEY, 'sim');
+    } catch {}
+    banner.hidden = true;
+    window.dispatchEvent(new Event('inovee:consentimento'));
+  });
+</script>
