@@ -11,7 +11,7 @@ const telLink = (t: string) => '+55' + t.replace(/\D/g, '').replace(/^55/, '');
 const linkMapa = (u: (typeof unidades)[number]['data']) =>
   u.mapaLink ||
   `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-    [empresa.nome, u.endereco, u.cidade, u.uf].filter(Boolean).join(', '),
+    [empresa.nome, u.endereco.replace(/\s*\(.*?\)/g, ''), u.cidade, u.uf].filter(Boolean).join(', '),
   )}`;
 ---
 

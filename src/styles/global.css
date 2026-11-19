@@ -323,7 +323,7 @@ h1, h2, h3, h4 { font-family: var(--f-display); font-weight: 400; line-height: 1
 }
 
 /* ─ Unidades (cartões com foto; o do mouse cresce) ─ */
-.unidades { list-style: none; display: flex; gap: 16px; height: 600px; }
+.unidades { list-style: none; display: flex; gap: 16px; height: 640px; }
 .unidade {
   flex: 1 1 0; min-width: 0; display: flex; flex-direction: column;
   background: var(--deep); border: 1px solid var(--line); border-radius: var(--radius-m); overflow: hidden;
@@ -347,6 +347,9 @@ h1, h2, h3, h4 { font-family: var(--f-display); font-weight: 400; line-height: 1
 .unidade dt { font-size: 0.78rem; color: var(--steel); }
 .unidade dd { color: var(--ice); }
 .unidade dd > span, .unidade dd > a { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+/* Endereço pode ser longo: quebra em linhas em vez de vazar do cartão */
+.unidade dl > div { min-width: 0; }
+.unidade dd > span:first-child { white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical; }
 .unidade dd a { color: var(--ice); text-decoration: none; }
 .unidade dd a:hover { color: var(--volt); }
 .unidade .pendente { color: var(--steel); font-style: italic; }

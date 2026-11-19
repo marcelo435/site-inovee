@@ -5,10 +5,10 @@ regiao: Agreste Setentrional
 ordem: 1
 descricao: Atendimento presencial e digital para o Agreste Setentrional.
 sede: false
-# TODO: preencher os dados abaixo (campos vazios não aparecem no site)
-endereco: ""
-bairro: ""
-cep: ""
+foto: ../../assets/unidades/orobo.jpg
+endereco: "Praça Coronel Abílio, 01, 1º andar"
+bairro: "Bairro da Matriz"
+cep: "55745-000"
 telefone: ""
 mapaEmbed: ""
 mapaLink: ""

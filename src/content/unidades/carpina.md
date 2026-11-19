@@ -5,10 +5,9 @@ regiao: Zona da Mata Norte
 ordem: 3
 descricao: Atendimento presencial e digital para a Zona da Mata Norte.
 sede: false
-# TODO: preencher os dados abaixo (campos vazios não aparecem no site)
-endereco: ""
-bairro: ""
-cep: ""
+endereco: "Avenida Agamenon Magalhães, 556"
+bairro: "São José"
+cep: "55815-060"
 telefone: ""
 mapaEmbed: ""
 mapaLink: ""

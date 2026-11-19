@@ -5,10 +5,9 @@ regiao: Grande Recife
 ordem: 4
 descricao: Atendimento presencial e digital para toda a Grande Recife.
 sede: true
-# TODO: preencher os dados abaixo (campos vazios não aparecem no site)
-endereco: ""
-bairro: ""
-cep: ""
+endereco: "Avenida Caxangá, 205, 1º andar, Sala 108"
+bairro: "Madalena"
+cep: "50720-250"
 telefone: ""
 mapaEmbed: ""
 mapaLink: ""
