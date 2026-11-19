@@ -5,7 +5,6 @@ regiao: Agreste Central pernambucano
 ordem: 2
 descricao: Atendimento presencial e digital para o Agreste Central pernambucano.
 sede: false
-foto: ../../assets/unidades/surubim.jpg
 endereco: "Rua Agamenon Magalhães, 307 (em frente à CDL)"
 bairro: "Centro"
 cep: "55750-000"

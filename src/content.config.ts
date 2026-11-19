@@ -37,7 +37,7 @@ const unidades = defineCollection({
     // Link do perfil no Google Meu Negócio / Google Maps
     mapaLink: z.string().default(''),
     // Foto da fachada (coloque o arquivo em src/assets/unidades/ e informe o caminho,
-    // ex.: foto: ../../assets/unidades/recife.jpg). Sem foto, aparece um espaço reservado.
+    // ex.: foto: ../../assets/unidades/recife.jpg). Sem foto, o cartão aparece sem a área de imagem.
     foto: image().optional(),
   }),
 });
