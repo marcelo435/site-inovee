@@ -20,12 +20,21 @@ const faqSchema = {
     acceptedAnswer: { '@type': 'Answer', text: q.r },
   })),
 };
+
+// Nome do site nos resultados do Google (o mesmo do site antigo no Wix)
+const siteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Inovee Consultoria e Contabilidade',
+  alternateName: ['Inovee', 'Inovee Contabilidade'],
+  url: 'https://www.inoveecontabilidade.com/',
+};
 ---
 
 <Base
   title="Inovee Consultoria e Contabilidade"
   description="A Inovee oferece serviços de contabilidade, assessoria fiscal e departamento pessoal para empresas. Conheça nossos serviços e fale com a equipe."
-  schema={faqSchema}
+  schema={[siteSchema, faqSchema]}
 >
   <Hero />
   <Destaques />
