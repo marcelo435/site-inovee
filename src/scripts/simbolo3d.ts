@@ -29,27 +29,32 @@ function limitesFaixas() {
   return lim;
 }
 
-/** Ruído suave periódico em x (para o mapa dar a volta no globo sem emenda). */
-function criarRuido(periodo: number, semente: number) {
-  const grade = new Map<string, number>();
-  const valor = (ix: number, iy: number) => {
-    const k = ((ix % periodo) + periodo) % periodo + "," + iy;
-    let v = grade.get(k);
-    if (v === undefined) {
-      const h = Math.sin((((ix % periodo) + periodo) % periodo) * 127.1 + iy * 311.7 + semente * 74.7) * 43758.5453;
-      v = h - Math.floor(h);
-      grade.set(k, v);
+/**
+ * Ruído suave periódico em x (para o mapa dar a volta no globo sem emenda).
+ * Os valores da grade são calculados uma vez numa tabela (antes era um Map com
+ * chaves em texto, ~10x mais lento — travava a página por mais de 1 s).
+ */
+function criarRuido(periodo: number, linhas: number, semente: number) {
+  const tab = new Float64Array(periodo * linhas);
+  for (let iy = 0; iy < linhas; iy++) {
+    for (let ix = 0; ix < periodo; ix++) {
+      const h = Math.sin(ix * 127.1 + iy * 311.7 + semente * 74.7) * 43758.5453;
+      tab[iy * periodo + ix] = h - Math.floor(h);
     }
-    return v;
-  };
-  const suave = (t: number) => t * t * (3 - 2 * t);
+  }
   return (x: number, y: number) => {
     const ix = Math.floor(x);
     const iy = Math.floor(y);
-    const fx = suave(x - ix);
-    const fy = suave(y - iy);
-    const a = valor(ix, iy) + (valor(ix + 1, iy) - valor(ix, iy)) * fx;
-    const b = valor(ix, iy + 1) + (valor(ix + 1, iy + 1) - valor(ix, iy + 1)) * fx;
+    const tx = x - ix;
+    const ty = y - iy;
+    const fx = tx * tx * (3 - 2 * tx);
+    const fy = ty * ty * (3 - 2 * ty);
+    const x0 = ((ix % periodo) + periodo) % periodo;
+    const x1 = (x0 + 1) % periodo;
+    const l0 = iy * periodo;
+    const l1 = l0 + periodo;
+    const a = tab[l0 + x0] + (tab[l0 + x1] - tab[l0 + x0]) * fx;
+    const b = tab[l1 + x0] + (tab[l1 + x1] - tab[l1 + x0]) * fx;
     return a + (b - a) * fy;
   };
 }
@@ -71,7 +76,7 @@ function criarMapaGlobo(celular: boolean) {
     { f: 6, a: 0.25 },
     { f: 12, a: 0.13 },
     { f: 24, a: 0.07 },
-  ].map((o, i) => ({ ...o, n: criarRuido(o.f * 2, 11 + i) }));
+  ].map((o, i) => ({ ...o, n: criarRuido(o.f * 2, o.f + 2, 11 + i) }));
   for (let y = 0; y < H; y++) {
     const lat = Math.abs(y / H - 0.5) * 2; // 0 no equador, 1 nos polos
     for (let x = 0; x < W; x++) {

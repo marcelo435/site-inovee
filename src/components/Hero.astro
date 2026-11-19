@@ -26,13 +26,14 @@ import simbolo from '../assets/inovee-simbolo.png';
 </section>
 
 <script>
-  // Carrega o 3D só depois que a página abriu (não atrasa o carregamento)
+  // O arquivo do 3D começa a baixar já (este script só roda depois que o HTML abriu,
+  // então não atrasa o texto). A montagem da cena espera um respiro curto do navegador.
   const alvo = document.getElementById('simbolo3d');
   if (alvo) {
-    const carregar = () => import('../scripts/simbolo3d')
-        .then((m) => m.iniciarSimbolo(alvo))
-        .catch(() => alvo.classList.add('sem-3d'));
-    if ('requestIdleCallback' in window) requestIdleCallback(carregar, { timeout: 1200 });
-    else setTimeout(carregar, 300);
+    const quandoLivre = (fn: () => void) =>
+      'requestIdleCallback' in window ? requestIdleCallback(fn, { timeout: 300 }) : setTimeout(fn, 50);
+    import('../scripts/simbolo3d')
+      .then((m) => quandoLivre(() => m.iniciarSimbolo(alvo)))
+      .catch(() => alvo.classList.add('sem-3d'));
   }
 </script>
