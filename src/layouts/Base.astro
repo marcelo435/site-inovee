@@ -32,13 +32,12 @@ const orgSchema = {
   name: empresa.nome,
   legalName: empresa.razaoSocial,
   url: empresa.site,
-  logo: new URL('/favicon.png', Astro.site).href,
+  logo: new URL('/icon-512.png', Astro.site).href,
   image: ogImage.href,
   email: empresa.email,
   telephone: empresa.telefoneLink,
   areaServed: { '@type': 'Country', name: 'Brasil' },
   sameAs: [linkInstagram],
-  ...(empresa.cnpj ? { taxID: empresa.cnpj } : {}),
 };
 const schemas = [orgSchema, ...(schema ? (Array.isArray(schema) ? schema : [schema]) : [])];
 ---

@@ -85,7 +85,6 @@ button, input, select, textarea { font: inherit; color: inherit; }
 h1, h2, h3, h4 { font-family: var(--f-display); font-weight: 400; line-height: 1.08; letter-spacing: -0.02em; }
 .t-hero { font-size: clamp(2.4rem, 5vw, 4.5rem); font-weight: 300; letter-spacing: -0.035em; line-height: 1.02; }
 .t-xl { font-size: clamp(2.1rem, 4.4vw, 3.6rem); font-weight: 300; letter-spacing: -0.03em; }
-.t-l { font-size: clamp(1.5rem, 2.6vw, 2.1rem); font-weight: 400; }
 .lead { font-size: clamp(1.05rem, 1.4vw, 1.2rem); color: var(--steel); max-width: 34em; line-height: 1.6; }
 .muted { color: var(--steel); }
 .kicker { font-size: 0.9rem; color: var(--volt); font-weight: 500; margin-bottom: 18px; display: block; }
@@ -197,42 +196,11 @@ h1, h2, h3, h4 { font-family: var(--f-display); font-weight: 400; line-height: 1
 .hero .lead { margin-top: 28px; color: rgba(var(--ink-rgb), 0.78); max-width: 30em; }
 .hero-acoes { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 36px; }
 
-
-.hero-unidades { list-style: none; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 26px; margin-left: auto; text-shadow: 0 1px 12px rgba(var(--bg-rgb), 0.9); }
-.hero-unidades .rotulo { font-size: 0.85rem; color: var(--steel); }
-.hero-unidades a { display: flex; align-items: center; gap: 10px; text-decoration: none; font-family: var(--f-display); font-size: 1.1rem; font-weight: 500; color: var(--ice); }
-.hero-unidades a:hover { color: var(--volt); }
-.hero-unidades a:hover .anel { border-color: var(--volt); box-shadow: 0 0 14px rgba(77, 163, 255, 0.6); }
-.hero-unidades .anel { width: 18px; height: 18px; border-radius: 50%; border: 2px solid rgba(var(--ink-rgb), 0.7); flex-shrink: 0; transition: 0.2s; }
-.hero-unidades .sede { font-family: var(--f-body); font-size: 0.75rem; font-weight: 500; color: var(--volt); }
-
-.hero-rodape { width: 100%; max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter) 36px; display: flex; flex-wrap: wrap; align-items: center; gap: 20px 40px; }
-.historias { display: flex; flex-wrap: wrap; gap: 14px; }
-.historia {
-  display: flex; align-items: center; gap: 14px; max-width: 420px;
-  padding: 10px 18px 10px 10px; border-radius: var(--radius-m);
-  background: rgba(var(--deep-rgb), 0.72); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-  border: 1px solid var(--line); text-decoration: none; transition: border-color 0.2s, background 0.2s;
-}
-.historia:hover { border-color: var(--royal); background: rgba(var(--deep2-rgb), 0.85); box-shadow: 0 0 0 1px var(--royal); }
-.historia:hover strong { color: var(--volt); }
-.historia img { width: 56px; height: 56px; border-radius: 12px; background: radial-gradient(circle, #ffffff, #dde6f7); padding: 8px; flex-shrink: 0; }
-:root[data-theme='dark'] .historia img { background: radial-gradient(circle, #10306f, #060a16); }
-.historia strong { display: block; font-size: 0.95rem; font-weight: 600; }
-.historia span { display: block; font-size: 0.84rem; color: var(--steel); line-height: 1.4; }
-
 @media (max-width: 860px) {
   .hero-3d { bottom: auto; height: 56svh; background: radial-gradient(50% 50% at 50% 55%, var(--hero-glow), transparent 70%), var(--abyss); }
   .hero-inner { align-items: flex-start; padding-top: calc(56svh - 24px); }
   .hero::after { background: linear-gradient(180deg, transparent calc(56svh - 140px), var(--abyss) calc(56svh - 10px)); }
-  .hero-unidades { margin-left: 0; gap: 12px 22px; }
-  .hero-unidades .rotulo { flex-basis: 100%; }
-  .hero-unidades a { font-size: 1rem; gap: 8px; }
-  .hero-unidades .anel { width: 16px; height: 16px; }
   .hero-3d .poster { left: 50%; top: 48%; width: min(84vw, 46svh); }
-}
-@media (max-width: 520px) {
-  .historia { max-width: none; width: 100%; }
 }
 
 /* ─ Destaques (abrir empresa / trocar de contador) ─ */

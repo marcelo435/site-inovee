@@ -5,13 +5,15 @@ import logo from '../assets/logo-inovee.png';
 ---
 
 <Base
-  title="Página não encontrada | Inovee Consultoria e Contabilidade"
+  title="Página não encontrada | Inovee Contabilidade"
   description="Não encontramos esta página. Volte ao início ou fale com a equipe da Inovee."
   noindex
 >
   <section class="pagina-404">
     <div class="wrap">
-      <Image src={logo} alt="Inovee Consultoria e Contabilidade" width={240} height={84} densities={[1, 2]} loading="eager" />
+      <a href="/" class="logo-404" aria-label="Inovee Consultoria e Contabilidade — início">
+        <Image src={logo} alt="" width={240} height={84} densities={[1, 2]} loading="eager" />
+      </a>
       <p class="codigo" aria-hidden="true">404</p>
       <h1 class="t-xl">Não encontramos esta página</h1>
       <p class="lead">O endereço pode ter mudado ou não existe mais. Use os botões abaixo para continuar.</p>

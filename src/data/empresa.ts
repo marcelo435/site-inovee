@@ -8,8 +8,8 @@ export const empresa = {
   nome: 'Inovee Contabilidade',
   razaoSocial: 'Inovee Consultoria e Contabilidade',
 
-  // TODO: preencher antes de publicar
-  cnpj: '', // ex.: '00.000.000/0001-00'
+  // CNPJs: ver "controladores" mais abaixo (são duas empresas).
+  // Registro no Conselho Regional de Contabilidade; vazio = não aparece no rodapé.
   crc: '', // ex.: 'CRC-PE 000000/O-0'
 
   site: 'https://www.inoveecontabilidade.com',
@@ -25,7 +25,6 @@ export const empresa = {
   portalCliente: 'https://inoveeicontabilidadedigital.osayk.com.br/#/login',
 
   horario: 'Seg–Sex: 08h–18h | Sáb: 08h–12h',
-  anosDeMercado: '10+',
 
   // Opcional: chave gratuita do https://web3forms.com para o formulário
   // também enviar uma cópia por e-mail. Vazio = só abre o WhatsApp.

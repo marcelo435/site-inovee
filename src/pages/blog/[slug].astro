@@ -26,7 +26,7 @@ const schema = {
 };
 ---
 
-<Base title={`${post.data.titulo} | Blog Inovee`} description={post.data.descricao} schema={schema} type="article">
+<Base title={post.data.titulo.length > 50 ? post.data.titulo : `${post.data.titulo} | Blog Inovee`} description={post.data.descricao} schema={schema} type="article">
   <PageHero kicker={post.data.categoria} titulo={post.data.titulo} migalhas={[{ href: '/blog/', label: 'Blog' }]}>
     <p class="post-meta">{dataFmt}, por {post.data.autor}</p>
   </PageHero>

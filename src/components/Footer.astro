@@ -2,12 +2,12 @@
 import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import simbolo from '../assets/inovee-simbolo.png';
-import { empresa, linkWhatsApp, linkInstagram } from '../data/empresa';
+import { empresa, controladores, linkWhatsApp, linkInstagram } from '../data/empresa';
 
 const servicos = (await getCollection('servicos')).sort((a, b) => a.data.ordem - b.data.ordem);
 const unidades = (await getCollection('unidades')).sort((a, b) => a.data.ordem - b.data.ordem);
 const ano = new Date().getFullYear();
-const registro = [empresa.cnpj && `CNPJ ${empresa.cnpj}`, empresa.crc].filter(Boolean).join(', ');
+const registro = [...controladores.map((c) => `CNPJ ${c.cnpj}`), empresa.crc].filter(Boolean).join(' · ');
 ---
 
 <footer class="site-footer">
