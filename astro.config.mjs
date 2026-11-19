@@ -6,4 +6,10 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   site: 'https://www.inoveecontabilidade.com',
   integrations: [sitemap()],
+  // Endereços do site antigo (Wix) levando para a página equivalente.
+  // (/contato continua existindo como página própria.)
+  redirects: {
+    '/sobre': '/#sobre',
+    '/services-7': '/servicos/',
+  },
 });

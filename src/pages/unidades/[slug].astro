@@ -66,7 +66,7 @@ const schema = {
         }
         <CtaFinal mensagem={`Olá! Unidade ${u.cidade}.`} />
       </article>
-      <aside class="lateral">
+      <div class="lateral">
         <h3>Contato da unidade</h3>
         <ul>
           {u.endereco && <li>{u.endereco}{u.bairro && `, ${u.bairro}`}<br />{u.cidade}, {u.uf}{u.cep && `. CEP ${u.cep}`}</li>}
@@ -76,7 +76,7 @@ const schema = {
           <li>{empresa.horario}</li>
         </ul>
         {u.mapaLink && <a class="btn btn-glow" href={u.mapaLink} target="_blank" rel="noopener">Como chegar</a>}
-      </aside>
+      </div>
     </div>
   </section>
 </Base>

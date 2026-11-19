@@ -177,7 +177,7 @@ h1, h2, h3, h4 { font-family: var(--f-display); font-weight: 400; line-height: 1
     radial-gradient(40% 50% at 72% 50%, var(--hero-glow), transparent 70%),
     var(--abyss);
 }
-.hero-3d canvas { position: absolute; inset: 0; display: block; width: 100%; height: 100%; opacity: 0; transition: opacity 1.2s ease; }
+.hero-3d canvas { position: absolute; inset: 0; display: block; width: 100%; height: 100%; opacity: 0; transition: opacity 0.6s ease; }
 .hero-3d.pronto canvas { opacity: 1; }
 .hero-3d .poster { position: absolute; width: min(24vw, 320px); right: 22%; top: 50%; transform: translateY(-50%); opacity: 0.85; filter: drop-shadow(0 0 60px rgba(77, 163, 255, 0.45)); transition: opacity 0.8s; }
 .hero-3d .poster { display: none; } /* só aparece se o aparelho não tiver 3D */
@@ -431,6 +431,9 @@ h1, h2, h3, h4 { font-family: var(--f-display); font-weight: 400; line-height: 1
 .form .btn { width: 100%; justify-content: center; padding: 15px 24px; font-size: 1rem; }
 .form-status { margin-top: 14px; font-size: 0.9rem; color: var(--volt); text-align: center; }
 .form-status:empty { display: none; }
+.form-status.erro { color: #c62828; }
+.form-status.erro a { color: inherit; font-weight: 600; }
+[data-theme='dark'] .form-status.erro { color: #ff8a80; }
 @media (max-width: 900px) { .contato { grid-template-columns: 1fr; } }
 @media (max-width: 560px) { .form-row { grid-template-columns: 1fr; } .canais li { grid-template-columns: 1fr; gap: 2px; } }
 
@@ -439,7 +442,7 @@ h1, h2, h3, h4 { font-family: var(--f-display); font-weight: 400; line-height: 1
 .site-footer::before { content: ''; position: absolute; left: 50%; bottom: -320px; width: 900px; height: 420px; transform: translateX(-50%); background: radial-gradient(closest-side, var(--hero-glow), transparent); pointer-events: none; }
 .footer-grid { display: grid; grid-template-columns: 1.5fr repeat(3, 1fr) 1.35fr; gap: 40px; position: relative; }
 .footer-grid p { color: var(--steel); font-size: 0.92rem; margin-top: 18px; max-width: 22em; }
-.footer-col h4 { font-family: var(--f-body); font-size: 0.86rem; font-weight: 600; color: var(--ice); margin-bottom: 16px; letter-spacing: 0; }
+.footer-col h2 { font-family: var(--f-body); font-size: 0.86rem; font-weight: 600; color: var(--ice); margin-bottom: 16px; letter-spacing: 0; }
 .footer-col a { display: block; color: var(--steel); text-decoration: none; font-size: 0.9rem; padding: 4px 0; overflow-wrap: anywhere; }
 .footer-col a:hover { color: var(--volt); }
 .footer-base { margin-top: 64px; padding-top: 24px; border-top: 1px solid var(--line); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; font-size: 0.84rem; color: var(--steel); position: relative; }

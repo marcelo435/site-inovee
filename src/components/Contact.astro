@@ -19,7 +19,7 @@ import { empresa, linkWhatsApp, linkInstagram } from '../data/empresa';
       </a>
     </div>
 
-    <form class="form" id="contatoForm" data-whatsapp={empresa.whatsappNumero} data-web3forms={empresa.web3formsKey}>
+    <form class="form" id="contatoForm" data-whatsapp={empresa.whatsappNumero} data-web3forms={empresa.web3formsKey} data-telefone={empresa.telefone}>
       <h3>Solicite uma consulta gratuita</h3>
       <div class="form-row">
         <div class="campo">
@@ -115,8 +115,36 @@ import { empresa, linkWhatsApp, linkInstagram } from '../data/empresa';
       }).catch(() => {});
     }
 
-    window.open(`https://wa.me/${form.dataset.whatsapp}?text=${encodeURIComponent(linhas.join('\n'))}`, '_blank', 'noopener');
-    status.textContent = 'Abrimos o WhatsApp com a sua mensagem. Toque em enviar para concluir.';
-    form.reset();
+    const url = `https://wa.me/${form.dataset.whatsapp}?text=${encodeURIComponent(linhas.join('\n'))}`;
+    // (sem 'noopener' aqui: com ele o navegador sempre devolve null e não dá para saber se abriu)
+    const janela = window.open(url, '_blank');
+    if (janela) {
+      janela.opener = null;
+      mostrarStatus('ok', 'Pronto! Abrimos o WhatsApp com a sua mensagem. Toque em enviar para concluir.');
+      form.reset();
+    } else {
+      // Navegador bloqueou a nova aba: mantém os dados e oferece o link direto
+      mostrarStatus('erro', 'Não conseguimos abrir o WhatsApp automaticamente. ', { href: url, texto: 'Toque aqui para enviar a mensagem' });
+    }
   });
+
+  function mostrarStatus(tipo: 'ok' | 'erro', texto: string, link?: { href: string; texto: string }) {
+    status.className = `form-status ${tipo}`;
+    status.textContent = texto;
+    if (link) {
+      const a = document.createElement('a');
+      a.href = link.href;
+      a.target = '_blank';
+      a.rel = 'noopener';
+      a.textContent = link.texto;
+      status.append(a, ` ou ligue para ${form.dataset.telefone}.`);
+    }
+  }
+
+  // Ao clicar em enviar com campo obrigatório vazio, avisa de forma clara
+  form.addEventListener(
+    'invalid',
+    () => mostrarStatus('erro', 'Preencha os campos obrigatórios (*) e aceite a Política de Privacidade para enviar.'),
+    true,
+  );
 </script>

@@ -15,9 +15,13 @@ interface Props {
   /** Dados estruturados extras (JSON-LD) específicos da página */
   schema?: Record<string, unknown> | Record<string, unknown>[];
   type?: 'website' | 'article';
+  /** Não indexar no Google (ex.: página 404) */
+  noindex?: boolean;
 }
 
-const { title, description, image = '/og-image.jpg', schema, type = 'website' } = Astro.props;
+const { title, description, image = '/og-image.jpg', schema, type = 'website', noindex = false } = Astro.props;
+// A imagem padrão de prévia (WhatsApp, Facebook, LinkedIn) tem 1200×630
+const imagemPadrao = image === '/og-image.jpg';
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const ogImage = new URL(image, Astro.site);
 
@@ -46,9 +50,11 @@ const schemas = [orgSchema, ...(schema ? (Array.isArray(schema) ? schema : [sche
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href={canonical} />
-    <link rel="icon" type="image/png" href="/favicon.png" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    {noindex ? <meta name="robots" content="noindex, follow" /> : <link rel="canonical" href={canonical} />}
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <meta name="theme-color" content="#f5f7fc" />
     <meta name="color-scheme" content="light dark" />
@@ -69,7 +75,21 @@ const schemas = [orgSchema, ...(schema ? (Array.isArray(schema) ? schema : [sche
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={ogImage} />
+    <meta property="og:image:secure_url" content={ogImage} />
+    {
+      imagemPadrao && (
+        <>
+          <meta property="og:image:type" content="image/jpeg" />
+          <meta property="og:image:width" content="1200" />
+          <meta property="og:image:height" content="630" />
+          <meta property="og:image:alt" content={`Logo da ${empresa.razaoSocial}`} />
+        </>
+      )
+    }
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
 
     {schemas.map((s) => <script type="application/ld+json" set:html={JSON.stringify(s)} />)}
   </head>
@@ -80,7 +100,7 @@ const schemas = [orgSchema, ...(schema ? (Array.isArray(schema) ? schema : [sche
       <slot />
     </main>
     <Footer />
-    <WhatsAppFloat />
+    <aside aria-label="Atalho para o WhatsApp"><WhatsAppFloat /></aside>
     <CookieBanner />
   </body>
 </html>

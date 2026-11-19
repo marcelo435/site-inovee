@@ -21,23 +21,23 @@ const registro = [empresa.cnpj && `CNPJ ${empresa.cnpj}`, empresa.crc].filter(Bo
         <p>Consultoria e contabilidade para empresas de todos os portes, presencial em Pernambuco e online em todo o Brasil.</p>
       </div>
       <div class="footer-col">
-        <h4>Serviços</h4>
+        <h2>Serviços</h2>
         {servicos.map((s) => <a href={`/servicos/${s.id}/`}>{s.data.titulo}</a>)}
       </div>
       <div class="footer-col">
-        <h4>Empresa</h4>
+        <h2>Empresa</h2>
         <a href="/#sobre">Sobre nós</a>
         <a href="/blog/">Blog</a>
         <a href="/#faq">Dúvidas</a>
-        <a href="/#contato">Contato</a>
+        <a href="/contato/">Contato</a>
         <a href={empresa.portalCliente} target="_blank" rel="noopener">Área do Cliente</a>
       </div>
       <div class="footer-col">
-        <h4>Unidades</h4>
+        <h2>Unidades</h2>
         {unidades.map((u) => <a href={`/unidades/${u.id}/`}>{u.data.cidade}{u.data.sede ? ' (sede)' : ''}</a>)}
       </div>
       <div class="footer-col">
-        <h4>Contato</h4>
+        <h2>Contato</h2>
         <a href={linkWhatsApp()} target="_blank" rel="noopener">{empresa.whatsapp}</a>
         <a href={`tel:${empresa.telefoneLink}`}>{empresa.telefone}</a>
         <a href={`mailto:${empresa.email}`}>{empresa.email}</a>

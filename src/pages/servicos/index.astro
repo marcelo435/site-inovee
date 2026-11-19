@@ -1,0 +1,23 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import Services from '../../components/Services.astro';
+import CtaFinal from '../../components/CtaFinal.astro';
+---
+
+<Base
+  title="Serviços de Contabilidade | Inovee Consultoria e Contabilidade"
+  description="Contabilidade, gestão fiscal, departamento pessoal, abertura de empresas e consultoria financeira para MEI, pequenas, médias e grandes empresas."
+>
+  <PageHero
+    titulo="Serviços"
+    subtitulo="Contabilidade completa para empresas de todos os portes, no Simples Nacional, no Lucro Presumido e no Lucro Real."
+    migalhas={[{ href: '/servicos/', label: 'Serviços' }]}
+  />
+  <Services />
+  <section class="secao">
+    <div class="wrap">
+      <CtaFinal mensagem="Olá! Gostaria de saber mais sobre os serviços da Inovee." />
+    </div>
+  </section>
+</Base>

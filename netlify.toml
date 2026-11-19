@@ -1,0 +1,22 @@
+# Configuração da hospedagem no Netlify (lida automaticamente ao conectar o repositório)
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  # O Astro 7 exige Node 22.23.4 ou mais novo
+  NODE_VERSION = "24"
+
+# Endereços do site antigo (Wix) → página equivalente, com redirecionamento definitivo (301)
+# "force" faz valer o 301 mesmo existindo a página de redirecionamento gerada pelo Astro
+[[redirects]]
+  from = "/sobre"
+  to = "/#sobre"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/services-7"
+  to = "/servicos/"
+  status = 301
+  force = true
