@@ -6,8 +6,8 @@ import simbolo from '../assets/inovee-simbolo.png';
 
 <section class="hero" id="home">
   <div class="hero-3d" id="simbolo3d" aria-hidden="true">
-    <!-- Logo parado: aparece enquanto o 3D carrega e fica no lugar se o 3D não funcionar -->
-    <Image class="poster" src={simbolo} alt="" width={300} height={300} loading="eager" />
+    <!-- Logo parado: só aparece se o 3D não funcionar no aparelho (escondido, não é baixado antes disso) -->
+    <Image class="poster" src={simbolo} alt="" width={300} height={300} loading="lazy" />
   </div>
 
   <div class="hero-inner">
