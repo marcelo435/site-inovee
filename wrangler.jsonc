@@ -1,0 +1,11 @@
+// Hospedagem no Cloudflare (Workers com arquivos estáticos).
+// O site é 100% estático: o Cloudflare só serve a pasta dist/ gerada pelo "npm run build".
+{
+  "name": "site-inovee",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./dist",
+    // Endereço inexistente → mostra dist/404.html com o código HTTP 404
+    "not_found_handling": "404-page"
+  }
+}
