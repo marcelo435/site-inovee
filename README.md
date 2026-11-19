@@ -1,5 +1,15 @@
 # Site Inovee Contabilidade
 
+![Astro](https://img.shields.io/badge/Astro-BC52EE?logo=astro&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black)
+![Three.js](https://img.shields.io/badge/Three.js-000000?logo=threedotjs&logoColor=white)
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white)
+![CSS](https://img.shields.io/badge/CSS-663399?logo=css&logoColor=white)
+![Node.js](https://img.shields.io/badge/Node.js-5FA04E?logo=nodedotjs&logoColor=white)
+![Cloudflare](https://img.shields.io/badge/Cloudflare_Workers-F38020?logo=cloudflare&logoColor=white)
+![Web](https://img.shields.io/badge/Site-Web-0A66C2?logo=googlechrome&logoColor=white)
+
 Site institucional feito com [Astro](https://astro.build). O Astro gera páginas HTML estáticas, que são rápidas, bem lidas pelo Google e podem ser hospedadas de graça.
 
 ## Como rodar no computador
@@ -78,15 +88,14 @@ Hoje o formulário abre o WhatsApp com a mensagem já preenchida. Para também r
 1. Gere uma chave gratuita em [web3forms.com](https://web3forms.com) usando o e-mail que vai receber as mensagens.
 2. Cole a chave em `web3formsKey`, no arquivo `src/data/empresa.ts`.
 
-## Publicação (Cloudflare Pages)
+## Publicação (Cloudflare Workers)
 
 1. Envie esta pasta para um repositório no GitHub.
-2. Na Cloudflare, abra **Workers & Pages → Create → Pages → Connect to Git** e escolha o repositório.
-3. Configure o build:
-   - Framework preset: **Astro**
-   - Build command: `npm run build`
-   - Output directory: `dist`
-4. Em **Custom domains**, adicione `www.inoveecontabilidade.com` e `inoveecontabilidade.com`.
+2. Na Cloudflare, abra **Workers & Pages → Create → Import a repository** e escolha o repositório.
+3. Build command: `npm run build`. Deploy command: `npx wrangler deploy` (usa o arquivo `wrangler.jsonc`, que publica a pasta `dist`).
+4. Em **Settings → Domains & Routes**, adicione `www.inoveecontabilidade.com`. O endereço sem www vai para o www por uma Redirect Rule da Cloudflare.
+
+Os redirecionamentos dos endereços antigos do Wix ficam em `public/_redirects`.
 
 Depois disso, cada alteração enviada ao GitHub publica o site sozinha, em cerca de 1 minuto.
 
@@ -96,7 +105,7 @@ Depois disso, cada alteração enviada ao GitHub publica o site sozinha, em cerc
 
 1. Adicione o domínio na Cloudflare (plano Free). A Cloudflare importa os registros DNS existentes. Confira se os MX e TXT vieram todos.
 2. No painel do Wix, em **Domínios → Configurações avançadas**, troque os servidores de nome (nameservers) para os dois indicados pela Cloudflare.
-3. Espere a propagação, que pode levar algumas horas. Depois, conecte o domínio ao projeto no Cloudflare Pages.
+3. Espere a propagação, que pode levar algumas horas. Depois, conecte o domínio ao projeto na Cloudflare.
 4. Teste o site **e o e-mail**, enviando e recebendo. Só depois cancele ou reduza o plano do Wix.
 
 ## Antes de publicar (pendências)
