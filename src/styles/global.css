@@ -179,9 +179,10 @@ h1, h2, h3, h4 { font-family: var(--f-display); font-weight: 400; line-height: 1
 }
 .hero-3d canvas { position: absolute; inset: 0; display: block; width: 100%; height: 100%; opacity: 0; transition: opacity 0.6s ease; }
 .hero-3d.pronto canvas { opacity: 1; }
-.hero-3d .poster { position: absolute; width: min(24vw, 320px); right: 22%; top: 50%; transform: translateY(-50%); opacity: 0.85; filter: drop-shadow(0 0 60px rgba(77, 163, 255, 0.45)); transition: opacity 0.8s; }
-.hero-3d .poster { display: none; } /* só aparece se o aparelho não tiver 3D */
-.hero-3d.sem-3d .poster { display: block; }
+/* Logo parado no lugar do 3D: visível enquanto carrega, some quando o 3D fica pronto,
+   e continua se o aparelho não tiver 3D (.sem-3d) */
+.hero-3d .poster { position: absolute; width: min(34vw, 480px); height: auto; left: 76%; top: 51%; transform: translate(-50%, -50%); opacity: 0.9; filter: drop-shadow(0 0 60px rgba(77, 163, 255, 0.45)); transition: opacity 0.6s ease; pointer-events: none; }
+.hero-3d.pronto .poster { opacity: 0; }
 .hero::after {
   content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
   background:
@@ -229,7 +230,7 @@ h1, h2, h3, h4 { font-family: var(--f-display); font-weight: 400; line-height: 1
   .hero-unidades .rotulo { flex-basis: 100%; }
   .hero-unidades a { font-size: 1rem; gap: 8px; }
   .hero-unidades .anel { width: 16px; height: 16px; }
-  .hero-3d .poster { right: 50%; top: 52%; transform: translate(50%, -50%); width: 46vw; }
+  .hero-3d .poster { left: 50%; top: 48%; width: min(84vw, 46svh); }
 }
 @media (max-width: 520px) {
   .historia { max-width: none; width: 100%; }
@@ -352,6 +353,13 @@ h1, h2, h3, h4 { font-family: var(--f-display); font-weight: 400; line-height: 1
 .unidade dd > span:first-child { white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical; }
 .unidade dd a { color: var(--ice); text-decoration: none; }
 .unidade dd a:hover { color: var(--volt); }
+/* WhatsApp em verde, com ícone (cartões e páginas das unidades) */
+.unidade dd > a.link-whats, .lateral a.link-whats { display: inline-flex; align-items: center; gap: 7px; max-width: 100%; color: #0f7a3c; font-weight: 600; }
+.link-whats svg { width: 19px; height: 19px; flex-shrink: 0; fill: #25d366; }
+.link-whats span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.unidade dd > a.link-whats:hover, .lateral a.link-whats:hover { color: #0b5e2e; text-decoration: underline; }
+[data-theme='dark'] .unidade dd > a.link-whats, [data-theme='dark'] .lateral a.link-whats { color: #4ade80; }
+[data-theme='dark'] .unidade dd > a.link-whats:hover, [data-theme='dark'] .lateral a.link-whats:hover { color: #86efac; }
 .unidade .pendente { color: var(--steel); font-style: italic; }
 .unidade .links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; padding-top: 6px; }
 .unidade .links .btn { white-space: nowrap; }

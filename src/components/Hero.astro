@@ -6,7 +6,8 @@ import simbolo from '../assets/inovee-simbolo.png';
 
 <section class="hero" id="home">
   <div class="hero-3d" id="simbolo3d" aria-hidden="true">
-    <Image class="poster" src={simbolo} alt="" width={400} height={400} loading="lazy" />
+    <!-- Logo parado: aparece enquanto o 3D carrega e fica no lugar se o 3D não funcionar -->
+    <Image class="poster" src={simbolo} alt="" width={300} height={300} loading="eager" />
   </div>
 
   <div class="hero-inner">
@@ -32,8 +33,19 @@ import simbolo from '../assets/inovee-simbolo.png';
   if (alvo) {
     const quandoLivre = (fn: () => void) =>
       'requestIdleCallback' in window ? requestIdleCallback(fn, { timeout: 300 }) : setTimeout(fn, 50);
+    const semTresD = () => alvo.classList.add('sem-3d');
     import('../scripts/simbolo3d')
-      .then((m) => quandoLivre(() => m.iniciarSimbolo(alvo)))
-      .catch(() => alvo.classList.add('sem-3d'));
+      .then((m) =>
+        quandoLivre(() => {
+          // erro na montagem (ex.: placa de vídeo do celular) → mantém o logo parado
+          try {
+            m.iniciarSimbolo(alvo);
+          } catch {
+            alvo.querySelector('canvas')?.remove();
+            semTresD();
+          }
+        }),
+      )
+      .catch(semTresD);
   }
 </script>

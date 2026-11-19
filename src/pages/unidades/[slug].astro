@@ -3,6 +3,7 @@ import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import PageHero from '../../components/PageHero.astro';
 import CtaFinal from '../../components/CtaFinal.astro';
+import IconeWhatsApp from '../../components/IconeWhatsApp.astro';
 import { empresa, linkWhatsApp } from '../../data/empresa';
 
 export async function getStaticPaths() {
@@ -71,7 +72,7 @@ const schema = {
         <ul>
           {u.endereco && <li>{u.endereco}{u.bairro && `, ${u.bairro}`}<br />{u.cidade}, {u.uf}{u.cep && `. CEP ${u.cep}`}</li>}
           <li><a href={`tel:${telefoneLink}`}>{telefone}</a></li>
-          <li><a href={linkWhatsApp(`Olá! Unidade ${u.cidade}.`)} target="_blank" rel="noopener">WhatsApp {empresa.whatsapp}</a></li>
+          <li><a class="link-whats" href={linkWhatsApp(`Olá! Unidade ${u.cidade}.`)} target="_blank" rel="noopener"><IconeWhatsApp /><span>WhatsApp {empresa.whatsapp}</span></a></li>
           <li><a href={`mailto:${empresa.email}`}>{empresa.email}</a></li>
           <li>{empresa.horario}</li>
         </ul>

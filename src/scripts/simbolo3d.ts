@@ -412,8 +412,15 @@ export function iniciarSimbolo(container: HTMLElement) {
     }
   };
   ajustar();
-  new ResizeObserver(ajustar).observe(container);
-  document.fonts?.ready.then(ajustar);
+  // Mudar o tamanho do canvas apaga o desenho; no modo "reduzir animações" não há
+  // animação redesenhando, então redesenha o quadro parado (quadro é definido abaixo,
+  // e estes callbacks só rodam depois que a função termina).
+  const reajustar = () => {
+    ajustar();
+    if (reduzir) quadro(3.1);
+  };
+  new ResizeObserver(reajustar).observe(container);
+  document.fonts?.ready.then(reajustar);
 
   // ── Interação com o mouse ──────────────────────────────────
   const alvo = { x: 0, y: 0 };

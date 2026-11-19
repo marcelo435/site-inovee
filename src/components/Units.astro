@@ -3,6 +3,7 @@ import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import simbolo from '../assets/inovee-simbolo.png';
 import { empresa, linkWhatsApp } from '../data/empresa';
+import IconeWhatsApp from './IconeWhatsApp.astro';
 
 const unidades = (await getCollection('unidades')).sort((a, b) => a.data.ordem - b.data.ordem);
 
@@ -71,8 +72,9 @@ const linkMapa = (u: (typeof unidades)[number]['data']) =>
                     <dt>Contato</dt>
                     <dd>
                       <a href={`tel:${telLink(telefone)}`}>{telefone}</a>
-                      <a href={linkWhatsApp(`Olá! Unidade ${d.cidade}.`)} target="_blank" rel="noopener">
-                        WhatsApp {empresa.whatsapp}
+                      <a class="link-whats" href={linkWhatsApp(`Olá! Unidade ${d.cidade}.`)} target="_blank" rel="noopener">
+                        <IconeWhatsApp />
+                        <span>WhatsApp {empresa.whatsapp}</span>
                       </a>
                     </dd>
                   </div>
