@@ -27,13 +27,13 @@ import { empresa, linkWhatsApp, linkInstagram } from '../data/empresa';
           <input id="f-nome" type="text" name="nome" placeholder="Seu nome" autocomplete="name" required />
         </div>
         <div class="campo">
-          <label for="f-whats">WhatsApp *</label>
-          <input id="f-whats" type="tel" name="whatsapp" placeholder="(00) 00000-0000" autocomplete="tel" required />
+          <label for="f-whats">WhatsApp <span class="opcional">(opcional)</span></label>
+          <input id="f-whats" type="tel" name="whatsapp" placeholder="(00) 00000-0000" autocomplete="tel" />
         </div>
       </div>
       <div class="campo">
-        <label for="f-email">E-mail *</label>
-        <input id="f-email" type="email" name="email" placeholder="seu@email.com" autocomplete="email" required />
+        <label for="f-email">E-mail <span class="opcional">(opcional, se preferir resposta por e-mail)</span></label>
+        <input id="f-email" type="email" name="email" placeholder="seu@email.com" autocomplete="email" />
       </div>
       <div class="form-row">
         <div class="campo">
@@ -60,15 +60,13 @@ import { empresa, linkWhatsApp, linkInstagram } from '../data/empresa';
       </div>
       <div class="campo">
         <label for="f-msg">Mensagem</label>
-        <textarea id="f-msg" name="mensagem" placeholder="Como podemos ajudar?"></textarea>
+        <textarea id="f-msg" name="mensagem" placeholder="Como podemos ajudar?" aria-describedby="f-msg-dica"></textarea>
+        <p class="dica" id="f-msg-dica">Não inclua CPF, documentos fiscais ou dados de funcionários. Pediremos o necessário depois, de forma segura.</p>
       </div>
-      <label class="consentimento">
-        <input type="checkbox" name="consentimento" required />
-        <span>
-          Concordo com o uso dos meus dados para retorno do contato, conforme a{' '}
-          <a href="/politica-de-privacidade/" target="_blank">Política de Privacidade</a>. *
-        </span>
-      </label>
+      <p class="aviso-privacidade">
+        Usamos estes dados só para responder ao seu pedido e enviar a proposta. Saiba mais na nossa{' '}
+        <a href="/politica-de-privacidade/" target="_blank">Política de Privacidade</a>.
+      </p>
       <button type="submit" class="btn btn-solid">Enviar pelo WhatsApp</button>
       <p class="form-status" id="formStatus" role="status"></p>
     </form>
@@ -88,9 +86,9 @@ import { empresa, linkWhatsApp, linkInstagram } from '../data/empresa';
       'Olá! Gostaria de solicitar uma consulta gratuita.',
       '',
       `*Nome:* ${v('nome')}`,
-      `*WhatsApp:* ${v('whatsapp')}`,
-      `*E-mail:* ${v('email')}`,
     ];
+    if (v('whatsapp')) linhas.push(`*WhatsApp:* ${v('whatsapp')}`);
+    if (v('email')) linhas.push(`*E-mail:* ${v('email')}`);
     if (v('porte')) linhas.push(`*Porte da empresa:* ${v('porte')}`);
     if (v('regime')) linhas.push(`*Regime tributário:* ${v('regime')}`);
     if (v('mensagem')) linhas.push('', `*Mensagem:* ${v('mensagem')}`);
@@ -141,10 +139,10 @@ import { empresa, linkWhatsApp, linkInstagram } from '../data/empresa';
     }
   }
 
-  // Ao clicar em enviar com campo obrigatório vazio, avisa de forma clara
+  // Ao clicar em enviar com campo obrigatório vazio ou e-mail inválido, avisa de forma clara
   form.addEventListener(
     'invalid',
-    () => mostrarStatus('erro', 'Preencha os campos obrigatórios (*) e aceite a Política de Privacidade para enviar.'),
+    () => mostrarStatus('erro', 'Preencha o seu nome (e confira o e-mail, se informou) para enviar.'),
     true,
   );
 </script>

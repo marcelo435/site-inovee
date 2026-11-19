@@ -32,6 +32,35 @@ export const empresa = {
   web3formsKey: '',
 };
 
+// ─────────────────────────────────────────────────────────────
+// PRIVACIDADE (LGPD) — usado na Política de Privacidade
+// ─────────────────────────────────────────────────────────────
+
+/** Empresas controladoras dos dados tratados pelo site (dados dos comprovantes de CNPJ). */
+export const controladores = [
+  {
+    razaoSocial: 'INOVEE CONSULTORIA & CONTABILIDADE LTDA',
+    cnpj: '35.095.101/0001-78',
+    sede: 'Recife - PE',
+    unidades: 'Recife (matriz) e Carpina (filial, CNPJ 35.095.101/0002-59)',
+  },
+  {
+    razaoSocial: 'INOVEE CONSULTORIA E CONTABILIDADE LTDA',
+    cnpj: '17.435.878/0001-52',
+    sede: 'Orobó - PE',
+    unidades: 'Orobó (matriz) e Surubim (filial, CNPJ 17.435.878/0002-33)',
+  },
+];
+
+export const privacidade = {
+  /** Canal para pedidos dos titulares (acompanhado pela equipe). */
+  email: 'atendimento@inoveecontabilidade.com',
+  /** Dados de quem pede contato e não se torna cliente. */
+  prazoContatos: '12 (doze) meses',
+  /** Data da versão publicada da política. */
+  atualizado: '19 de novembro de 2026',
+};
+
 export const MENSAGEM_PADRAO = 'Olá! Gostaria de saber mais sobre os serviços da Inovee.';
 
 /** Gera o link do WhatsApp com uma mensagem pronta. */

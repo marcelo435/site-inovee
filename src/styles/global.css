@@ -432,9 +432,11 @@ h1, h2, h3, h4 { font-family: var(--f-display); font-weight: 400; line-height: 1
 .campo input::placeholder, .campo textarea::placeholder { color: rgba(var(--steel-rgb), 0.6); }
 .campo input:focus, .campo select:focus, .campo textarea:focus { border-color: var(--volt); box-shadow: 0 0 0 3px rgba(77, 163, 255, 0.15); }
 .campo textarea { resize: vertical; min-height: 110px; }
-.consentimento { display: flex; gap: 12px; align-items: flex-start; font-size: 0.86rem; color: var(--steel); margin: 6px 0 24px; cursor: pointer; }
-.consentimento input { margin-top: 3px; width: 17px; height: 17px; accent-color: var(--royal); flex-shrink: 0; }
-.consentimento a { color: var(--volt); }
+.campo .opcional { color: var(--steel); }
+.campo .dica { font-size: 0.8rem; color: var(--steel); margin-top: 6px; }
+.aviso-privacidade { font-size: 0.86rem; color: var(--steel); margin: 6px 0 20px; }
+.aviso-privacidade a { color: var(--volt); }
+.nota-legal { font-size: 0.82rem; color: var(--steel); margin-top: 40px; }
 .form .btn { width: 100%; justify-content: center; padding: 15px 24px; font-size: 1rem; }
 .form-status { margin-top: 14px; font-size: 0.9rem; color: var(--volt); text-align: center; }
 .form-status:empty { display: none; }

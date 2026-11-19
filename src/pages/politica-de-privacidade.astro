@@ -1,72 +1,186 @@
 ---
 import Base from '../layouts/Base.astro';
 import PageHero from '../components/PageHero.astro';
-import { empresa } from '../data/empresa';
+import { controladores, privacidade, empresa } from '../data/empresa';
 
-// MODELO — revisar com o jurídico antes de publicar.
-const atualizado = '7 de novembro de 2026';
+// Texto aprovado com o jurídico. Ao mudar qualquer prática (novo formulário, ferramenta de
+// análise, prazo de guarda), atualize esta página e a data em src/data/empresa.ts.
+const canal = privacidade.email;
 ---
 
 <Base
-  title="Política de Privacidade | Inovee Contabilidade"
-  description="Saiba como a Inovee Contabilidade trata os seus dados pessoais, conforme a Lei Geral de Proteção de Dados (LGPD)."
+  title="Política de Privacidade | Inovee Consultoria e Contabilidade"
+  description="Como a Inovee trata os dados pessoais coletados pelo site: controladores, finalidades, bases legais, compartilhamento, prazos e como exercer seus direitos (LGPD)."
 >
-  <PageHero titulo="Política de Privacidade" subtitulo={`Última atualização: ${atualizado}`} />
+  <PageHero titulo="Política de Privacidade" subtitulo={`Última atualização: ${privacidade.atualizado}`} />
   <section class="secao">
     <div class="wrap">
       <article class="prose prose-centro">
         <p>
-          Esta política explica como a <strong>{empresa.razaoSocial}</strong>{empresa.cnpj && `, inscrita no CNPJ ${empresa.cnpj}`}
-          ("Inovee"), trata os dados pessoais coletados por meio deste site, em conformidade com a Lei nº 13.709/2018
-          (Lei Geral de Proteção de Dados — LGPD).
+          Esta política explica como tratamos os dados pessoais coletados por meio do site{' '}
+          <strong>www.inoveecontabilidade.com</strong>, conforme a Lei nº 13.709/2018 (Lei Geral de Proteção de Dados
+          Pessoais — LGPD). Ela vale para quem visita o site ou entra em contato por ele.
         </p>
 
-        <h2>1. Quais dados coletamos</h2>
-        <p>Coletamos apenas os dados que você nos informa voluntariamente no formulário de contato:</p>
+        <h2>1. Quem é responsável pelos seus dados</h2>
+        <p>O site é mantido em conjunto pelas duas empresas da marca Inovee, que são as controladoras dos dados:</p>
         <ul>
-          <li>Nome, número de WhatsApp e e-mail;</li>
-          <li>Porte da empresa e regime tributário (opcionais);</li>
-          <li>O conteúdo da mensagem enviada.</li>
+          {
+            controladores.map((c) => (
+              <li>
+                <strong>{c.razaoSocial}</strong>, CNPJ {c.cnpj}, com sede em {c.sede}. Unidades: {c.unidades}.
+              </li>
+            ))
+          }
         </ul>
         <p>
-          O site não utiliza cookies de rastreamento ou de publicidade. Guardamos no seu navegador apenas a informação de
-          que você já viu o aviso de privacidade.
+          Os pedidos recebidos pelo site são atendidos pela equipe da unidade escolhida por você ou da unidade mais
+          adequada ao seu caso. Nesta política, "Inovee", "nós" e "nosso" se referem às duas empresas.
         </p>
 
-        <h2>2. Para que usamos os dados</h2>
+        <h2>2. Quais dados tratamos</h2>
+        <h3>Dados que você informa</h3>
+        <p>No formulário de contato:</p>
         <ul>
-          <li>Responder ao seu contato e agendar a consulta solicitada;</li>
-          <li>Elaborar e enviar proposta de prestação de serviços contábeis.</li>
+          <li>nome;</li>
+          <li>número de WhatsApp e e-mail, se você decidir informar;</li>
+          <li>porte da empresa e regime tributário, se você decidir informar;</li>
+          <li>o texto da sua mensagem.</li>
         </ul>
         <p>
-          A base legal é o seu consentimento e a execução de procedimentos preliminares relacionados a contrato (art. 7º,
-          incisos I e V, da LGPD).
+          O formulário não envia os dados para um servidor nosso: ele abre uma conversa no WhatsApp com a mensagem
+          preenchida, e o envio só acontece quando você toca em enviar no seu aplicativo. Ao conversar conosco pelo
+          WhatsApp, por telefone ou por e-mail, também recebemos o seu número, o nome do seu perfil ou o seu endereço de
+          e-mail.
+        </p>
+        <p>
+          <strong>Pedimos que você não inclua na mensagem</strong> CPF, documentos fiscais, dados de funcionários ou outras
+          informações que não sejam necessárias para o primeiro contato. Esses dados serão solicitados de forma segura se
+          você se tornar cliente.
+        </p>
+        <h3>Dados coletados automaticamente</h3>
+        <ul>
+          <li>
+            dados técnicos de acesso, como endereço IP, data e hora, navegador, dispositivo e páginas visitadas, registrados
+            pelo provedor de hospedagem para entregar o site e protegê-lo contra ataques;
+          </li>
+          <li>
+            estatísticas de visitas (quantas pessoas acessaram cada página, de que tipo de aparelho e de qual região),
+            produzidas pelo Cloudflare Web Analytics <strong>sem cookies</strong> e sem identificar visitantes
+            individualmente.
+          </li>
+        </ul>
+        <h3>Cookies e armazenamento no navegador</h3>
+        <p>
+          O site <strong>não usa cookies</strong> nem ferramentas de publicidade ou de rastreamento entre sites (como Google
+          Analytics ou Meta Pixel). Guardamos no seu próprio navegador apenas duas preferências, que não saem do seu
+          aparelho: o tema escolhido (claro ou escuro) e o registro de que você já leu o aviso de privacidade.
         </p>
 
-        <h2>3. Compartilhamento</h2>
-        <p>Não vendemos nem cedemos seus dados. Eles podem passar pelos seguintes serviços, necessários ao funcionamento do site:</p>
+        <h2>3. Para que usamos os dados e com qual base legal</h2>
         <ul>
-          <li><strong>WhatsApp (Meta)</strong> — o formulário abre uma conversa no WhatsApp com a mensagem que você preencheu;</li>
-          <li><strong>Provedor de hospedagem</strong> — registros técnicos de acesso (como endereço IP), para segurança;</li>
-          <li><strong>rss2json.com</strong> — usado para exibir as notícias da Fenacon na página inicial.</li>
+          <li>
+            <strong>Responder ao seu contato, agendar a consulta e enviar proposta de serviços</strong> — base legal:
+            procedimentos preliminares relacionados a contrato, a seu pedido (art. 7º, V, da LGPD).
+          </li>
+          <li>
+            <strong>Prestar os serviços contratados</strong>, se você se tornar cliente — base legal: execução de contrato
+            (art. 7º, V) e cumprimento de obrigações legais e regulatórias (art. 7º, II).
+          </li>
+          <li>
+            <strong>Manter o site funcionando com segurança e entender, de forma agregada, como ele é usado</strong> — base
+            legal: legítimo interesse (art. 7º, IX), limitado ao estritamente necessário.
+          </li>
+          <li>
+            <strong>Guardar registros para exercer direitos em processos</strong>, quando necessário — base legal: exercício
+            regular de direitos (art. 7º, VI).
+          </li>
+        </ul>
+        <p>Não usamos os seus dados para enviar publicidade sem a sua autorização e não vendemos dados pessoais.</p>
+
+        <h2>4. Com quem compartilhamos</h2>
+        <p>Os dados passam apenas pelos fornecedores necessários para o site e o atendimento funcionarem:</p>
+        <ul>
+          <li><strong>WhatsApp (Meta)</strong> — canal pelo qual o formulário envia a sua mensagem e pelo qual conversamos;</li>
+          <li><strong>Cloudflare</strong> — hospedagem, segurança e estatísticas de visitas sem cookies;</li>
+          <li><strong>Google Workspace</strong> — nosso e-mail corporativo;</li>
+          <li>
+            <strong>rss2json.com</strong> — serviço que exibe as notícias da Fenacon na página inicial; ao carregar essa parte
+            da página, o seu navegador se conecta a ele e informa dados técnicos como o endereço IP;
+          </li>
+          <li>
+            <strong>Portal do cliente</strong> — a "Área do Cliente" é um sistema de um fornecedor externo, com aviso de
+            privacidade próprio, usado apenas por clientes.
+          </li>
+        </ul>
+        <p>
+          Também podemos compartilhar dados com autoridades públicas quando a lei exigir. Alguns desses fornecedores mantêm
+          servidores fora do Brasil; nesses casos, a transferência internacional segue o art. 33 da LGPD, com base nas
+          garantias contratuais oferecidas por eles.
+        </p>
+
+        <h2>5. Por quanto tempo guardamos</h2>
+        <ul>
+          <li>
+            <strong>Contatos que não se tornam clientes:</strong> até {privacidade.prazoContatos} após a última interação.
+            Depois disso, os dados são excluídos ou anonimizados.
+          </li>
+          <li>
+            <strong>Clientes:</strong> durante o contrato e, depois dele, pelos prazos exigidos pela legislação (por
+            exemplo, fiscal, trabalhista e contábil) e pelo tempo necessário para o exercício regular de direitos.
+          </li>
+          <li>
+            <strong>Dados técnicos de acesso:</strong> pelos prazos praticados pelo provedor de hospedagem e, quando
+            aplicável, pelo período exigido pelo Marco Civil da Internet (Lei nº 12.965/2014).
+          </li>
         </ul>
 
-        <h2>4. Por quanto tempo guardamos</h2>
+        <h2>6. Seus direitos</h2>
+        <p>Conforme o art. 18 da LGPD, você pode pedir, a qualquer momento:</p>
+        <ul>
+          <li>a confirmação de que tratamos dados seus e o acesso a eles;</li>
+          <li>a correção de dados incompletos, inexatos ou desatualizados;</li>
+          <li>a anonimização, o bloqueio ou a eliminação de dados desnecessários, excessivos ou tratados em desacordo com a lei;</li>
+          <li>a portabilidade dos dados a outro fornecedor;</li>
+          <li>a eliminação dos dados tratados com base no seu consentimento, quando for o caso;</li>
+          <li>a informação sobre com quem compartilhamos os seus dados;</li>
+          <li>a informação sobre a possibilidade de não dar consentimento e as consequências disso, quando for o caso;</li>
+          <li>a revogação do consentimento, quando for o caso;</li>
+          <li>e se opor a um tratamento feito com base em outra hipótese legal, se ele descumprir a LGPD.</li>
+        </ul>
         <p>
-          Os dados de contato são mantidos pelo tempo necessário para atender à sua solicitação. Se você se tornar cliente,
-          os dados passam a ser tratados conforme o contrato de prestação de serviços e as obrigações legais aplicáveis.
+          Você também pode apresentar reclamação à Autoridade Nacional de Proteção de Dados (ANPD), em{' '}
+          <a href="https://www.gov.br/anpd" target="_blank" rel="noopener">gov.br/anpd</a>.
         </p>
 
-        <h2>5. Seus direitos</h2>
+        <h2>7. Como falar conosco sobre privacidade</h2>
         <p>
-          Você pode, a qualquer momento, solicitar a confirmação do tratamento, o acesso, a correção, a anonimização, a
-          portabilidade ou a eliminação dos seus dados, e também revogar o consentimento (art. 18 da LGPD).
+          Para exercer seus direitos ou tirar dúvidas sobre esta política, escreva para{' '}
+          <a href={`mailto:${canal}?subject=${encodeURIComponent('Privacidade - pedido de titular')}`}>{canal}</a> com o
+          assunto <strong>"Privacidade"</strong>. Podemos pedir informações para confirmar a sua identidade antes de
+          atender o pedido, para proteger os seus dados. Respondemos no menor prazo possível e dentro dos prazos da LGPD.
+        </p>
+        <p>
+          As empresas da Inovee se enquadram como agentes de tratamento de pequeno porte e, por isso, estão dispensadas de
+          indicar um encarregado (Resolução CD/ANPD nº 2/2022, art. 11). O canal acima cumpre essa função de comunicação
+          com os titulares e com a ANPD.
         </p>
 
-        <h2>6. Contato</h2>
+        <h2>8. Segurança</h2>
         <p>
-          Para exercer seus direitos ou tirar dúvidas sobre esta política, escreva para
-          <a href={`mailto:${empresa.email}`}>{empresa.email}</a>.
+          O site usa conexão criptografada (HTTPS), e o acesso aos dados recebidos é restrito à equipe que precisa deles
+          para o atendimento. Nenhum sistema é totalmente imune a incidentes; se ocorrer algum que possa causar risco ou dano
+          relevante a você, comunicaremos você e a ANPD, conforme a lei.
+        </p>
+
+        <h2>9. Alterações nesta política</h2>
+        <p>
+          Podemos atualizar esta política quando mudarmos a forma de tratar dados ou quando a lei exigir. A data da versão
+          em vigor fica no topo da página.
+        </p>
+
+        <p class="nota-legal">
+          {empresa.nome} · {controladores.map((c) => `${c.razaoSocial} (CNPJ ${c.cnpj})`).join(' · ')}
         </p>
       </article>
     </div>
